@@ -1,0 +1,9 @@
+.category-card {
+    padding: 30px;
+    background-color: #e5e7eb;
+    border-radius: 8px;
+}
+
+.category-card:hover {
+    cursor: pointer;
+}

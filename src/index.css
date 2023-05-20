@@ -14,3 +14,14 @@ textarea:focus,
 button:focus {
     outline: none;
 }
+
+.screen {
+  padding: 50px 40px;
+}
+
+.image {
+  height: 150px;
+  width: 220px;
+  background-color: grey;
+  border-radius: 8px;
+}

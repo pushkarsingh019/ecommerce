@@ -12,6 +12,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<HomeScreen />} />
+                <Route path="/products/:category" element={<ProductScreen />} />
                 <Route path="/products" element={<ProductScreen />} />
                 <Route path="/profile" element={<ProfileScreen />} />
                 <Route path="/wishlist" element={<WishList />} />

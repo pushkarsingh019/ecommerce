@@ -1,0 +1,10 @@
+.screen h1 {
+    text-align: center;
+}
+
+.categories-flex {
+    padding: 100px 0px;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+}
