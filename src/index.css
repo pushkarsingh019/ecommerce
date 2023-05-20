@@ -16,7 +16,7 @@ button:focus {
 }
 
 .screen {
-  padding: 50px 40px;
+  padding: 80px 40px;
 }
 
 .image {
@@ -24,4 +24,9 @@ button:focus {
   width: 220px;
   background-color: grey;
   border-radius: 8px;
+}
+
+.flex {
+  display: flex !important;
+  justify-content: space-between !important;
 }
