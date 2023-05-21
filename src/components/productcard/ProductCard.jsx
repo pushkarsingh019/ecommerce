@@ -1,7 +1,13 @@
 import "./productcard.css";
 import iphoneImage from "../../assets/iphoneImage.jpeg";
 
+import wishlistOutline from "../../assets/wishlist_outline.svg";
+import wishlistAdded from "../../assets/wishlist_added.svg";
+import { useState } from "react";
+
 const ProductCard = ({ name, description, price, image, rating, id }) => {
+    const [inWishlist, setInWishlist] = useState(false);
+
     const imageContainerStyles = {
         height: 0,
         paddingBottom: "70%", // Example aspect ratio, adjust as needed
@@ -19,6 +25,21 @@ const ProductCard = ({ name, description, price, image, rating, id }) => {
 
     return (
         <div className="product-card">
+            {inWishlist ? (
+                <img
+                    className="wishlist"
+                    src={wishlistAdded}
+                    alt="wishlist"
+                    onClick={() => setInWishlist(false)}
+                />
+            ) : (
+                <img
+                    className="wishlist"
+                    src={wishlistOutline}
+                    alt="wishlist"
+                    onClick={() => setInWishlist(true)}
+                />
+            )}
             <div style={imageContainerStyles}>
                 <img src={iphoneImage} alt="iphoneimage" style={imageStyles} />
             </div>
