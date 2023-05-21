@@ -17,6 +17,7 @@ const ProductScreen = () => {
     const [selectedCategories, setSelectedCategories] = useState(
         category ? [category] : []
     );
+    const [ratingFilter, setRatingFilter] = useState(3);
 
     useEffect(() => {
         fetchProducts();
@@ -47,6 +48,28 @@ const ProductScreen = () => {
         );
         setFilteredProducts(sortedProducts);
     }, [sortOrder]);
+
+    useEffect(() => {
+        let filteredProducts = products;
+
+        if (selectedCategories.length > 0) {
+            filteredProducts = filteredProducts.filter((product) =>
+                selectedCategories.includes(product.category)
+            );
+        }
+
+        if (ratingFilter) {
+            filteredProducts = filteredProducts.filter(
+                (product) => product.rating >= ratingFilter
+            );
+        }
+
+        const sortedProducts = [...filteredProducts].sort((a, b) =>
+            sortOrder === 0 ? a.price - b.price : b.price - a.price
+        );
+
+        setFilteredProducts(sortedProducts);
+    }, [selectedCategories, ratingFilter, sortOrder, products]);
 
     const fetchProducts = async () => {
         const { data } = await axios.get(`${backendUrl}/api/products`);
@@ -159,7 +182,15 @@ const ProductScreen = () => {
                             <strong>Filter By Rating</strong>
                             <br />
                             <span>1 </span>
-                            <input type="range" min={1} max={5} />
+                            <input
+                                type="range"
+                                min={1}
+                                max={5}
+                                defaultValue={3}
+                                onChange={(event) =>
+                                    setRatingFilter(event.target.value)
+                                }
+                            />
                             <span> 5</span>
                         </div>
                     </div>
