@@ -13,10 +13,10 @@ const ProductScreen = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState(products);
     const [categories, setCategories] = useState([]);
+    const [sortOrder, setSortOrder] = useState(); // 0 -- low to high, 1 - high to low
     const [selectedCategories, setSelectedCategories] = useState(
         category ? [category] : []
     );
-    console.log(selectedCategories);
 
     useEffect(() => {
         fetchProducts();
@@ -31,6 +31,7 @@ const ProductScreen = () => {
                     flag = true;
                 }
             });
+
             return flag;
         });
         setFilteredProducts(filteredProducts);
@@ -39,6 +40,13 @@ const ProductScreen = () => {
             setFilteredProducts(products);
         }
     }, [selectedCategories]);
+
+    useEffect(() => {
+        const sortedProducts = [...filteredProducts].sort((a, b) =>
+            sortOrder === 0 ? a.price - b.price : b.price - a.price
+        );
+        setFilteredProducts(sortedProducts);
+    }, [sortOrder]);
 
     const fetchProducts = async () => {
         const { data } = await axios.get(`${backendUrl}/api/products`);
@@ -66,8 +74,17 @@ const ProductScreen = () => {
         }
     };
     const clearFilters = () => {
+        console.log(sortOrder, selectedCategories);
         setSelectedCategories([]);
+        setSortOrder();
         setFilteredProducts(products);
+        console.log(sortOrder, selectedCategories);
+    };
+    const changeSortOrder = (sortCode) => {
+        // 0 -> low to high, 1 -> high to low
+        console.log(sortOrder === sortCode);
+        sortOrder === sortCode ? setSortOrder() : setSortOrder(sortCode);
+        console.log(sortOrder);
     };
 
     return (
@@ -120,9 +137,19 @@ const ProductScreen = () => {
                             <strong>Sort By</strong>
                             <br />
                             <div>
-                                <input type="radio" /> <span>Low to High</span>
+                                <input
+                                    type="radio"
+                                    onChange={() => changeSortOrder(0)}
+                                    checked={sortOrder === 0 ? true : false}
+                                />{" "}
+                                <span>Low to High</span>
                                 <br />
-                                <input type="radio" /> <span>High to Low</span>
+                                <input
+                                    type="radio"
+                                    onChange={() => changeSortOrder(1)}
+                                    checked={sortOrder === 1 ? true : false}
+                                />{" "}
+                                <span>High to Low</span>
                             </div>
                         </div>
                         <br />
@@ -137,19 +164,26 @@ const ProductScreen = () => {
                         </div>
                     </div>
                     <div className="products-listing">
-                        {filteredProducts.map((product) => {
-                            return (
-                                <ProductCard
-                                    key={product._id}
-                                    name={product.name}
-                                    description={product.description}
-                                    price={product.price}
-                                    image={product.image}
-                                    id={product._id}
-                                    rating={product.rating}
-                                />
-                            );
-                        })}
+                        {filteredProducts.length === 0 ? (
+                            <div>
+                                <h3>ahhh, no products to show...</h3>
+                                <p>check after sometime...</p>
+                            </div>
+                        ) : (
+                            filteredProducts.map((product) => {
+                                return (
+                                    <ProductCard
+                                        key={product._id}
+                                        name={product.name}
+                                        description={product.description}
+                                        price={product.price}
+                                        image={product.image}
+                                        id={product._id}
+                                        rating={product.rating}
+                                    />
+                                );
+                            })
+                        )}
                     </div>
                 </section>
             </main>
