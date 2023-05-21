@@ -97,17 +97,14 @@ const ProductScreen = () => {
         }
     };
     const clearFilters = () => {
-        console.log(sortOrder, selectedCategories);
         setSelectedCategories([]);
         setSortOrder();
+        setRatingFilter(3);
         setFilteredProducts(products);
-        console.log(sortOrder, selectedCategories);
     };
     const changeSortOrder = (sortCode) => {
         // 0 -> low to high, 1 -> high to low
-        console.log(sortOrder === sortCode);
         sortOrder === sortCode ? setSortOrder() : setSortOrder(sortCode);
-        console.log(sortOrder);
     };
 
     return (
@@ -186,6 +183,7 @@ const ProductScreen = () => {
                                 type="range"
                                 min={1}
                                 max={5}
+                                value={ratingFilter}
                                 defaultValue={3}
                                 onChange={(event) =>
                                     setRatingFilter(event.target.value)
