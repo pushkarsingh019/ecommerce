@@ -27,7 +27,7 @@ const ProductCard = ({ name, description, price, image, rating, id }) => {
             <p>{description}</p>
             <br />
             <div className="flex">
-                <p>4.5</p>
+                <p>{rating}</p>
                 <p>₹{price}</p>
             </div>
             <br />

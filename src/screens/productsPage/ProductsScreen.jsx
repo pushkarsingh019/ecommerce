@@ -10,27 +10,61 @@ import "./products.css";
 
 const ProductScreen = () => {
     const { category } = useParams();
-    console.log(category);
     const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState(products);
     const [categories, setCategories] = useState([]);
-    const fetchProducts = async () => {
-        const { data } = await axios.get(`${backendUrl}/api/products`);
-        category
-            ? setProducts(
-                  data.filter((product) => product.category === category)
-              )
-            : setProducts(data);
-    };
-
-    const fetchCategories = async () => {
-        const { data } = await axios.get(`${backendUrl}/api/categories`);
-        setCategories(data);
-    };
+    const [selectedCategories, setSelectedCategories] = useState(
+        category ? [category] : []
+    );
+    console.log(selectedCategories);
 
     useEffect(() => {
         fetchProducts();
         fetchCategories();
     }, []);
+
+    useEffect(() => {
+        const filteredProducts = products.filter((product) => {
+            let flag = false;
+            selectedCategories.forEach((selectedCategory) => {
+                if (selectedCategory === product.category) {
+                    flag = true;
+                }
+            });
+            return flag;
+        });
+        setFilteredProducts(filteredProducts);
+
+        if (selectedCategories.length === 0) {
+            setFilteredProducts(products);
+        }
+    }, [selectedCategories]);
+
+    const fetchProducts = async () => {
+        const { data } = await axios.get(`${backendUrl}/api/products`);
+        setProducts(data);
+        category
+            ? setFilteredProducts(
+                  data.filter((product) => product.category === category)
+              )
+            : setFilteredProducts(data);
+    };
+    const fetchCategories = async () => {
+        const { data } = await axios.get(`${backendUrl}/api/categories`);
+        setCategories(data);
+    };
+    const onSelectedCategoryChange = async (categoryName) => {
+        const CategorySelected = selectedCategories.includes(categoryName);
+        if (CategorySelected) {
+            setSelectedCategories(
+                selectedCategories.filter(
+                    (category) => category !== categoryName
+                )
+            );
+        } else {
+            setSelectedCategories([...selectedCategories, categoryName]);
+        }
+    };
 
     return (
         <section>
@@ -39,9 +73,9 @@ const ProductScreen = () => {
                 <br />
                 <section className="products-screen">
                     <h3 style={{ marginLeft: "15rem" }}>
-                        {category
-                            ? `Showing results for ${category} (${products.length} products)`
-                            : `Showing all products (${products.length} products)`}
+                        {selectedCategories.length !== 0
+                            ? `Showing results for ${selectedCategories} (${filteredProducts.length} products)`
+                            : `Showing all products (${filteredProducts.length} products)`}
                     </h3>
                     <br />
                     <div className="sidebar">
@@ -57,7 +91,17 @@ const ProductScreen = () => {
                                 {categories.map((category) => {
                                     return (
                                         <div key={category._id}>
-                                            <input type="checkbox" />{" "}
+                                            <input
+                                                type="checkbox"
+                                                onChange={() =>
+                                                    onSelectedCategoryChange(
+                                                        category.categoryName
+                                                    )
+                                                }
+                                                checked={selectedCategories.includes(
+                                                    category.categoryName
+                                                )}
+                                            />{" "}
                                             <span>{category.categoryName}</span>
                                         </div>
                                     );
@@ -87,7 +131,7 @@ const ProductScreen = () => {
                         </div>
                     </div>
                     <div className="products-listing">
-                        {products.map((product) => {
+                        {filteredProducts.map((product) => {
                             return (
                                 <ProductCard
                                     key={product._id}
@@ -96,6 +140,7 @@ const ProductScreen = () => {
                                     price={product.price}
                                     image={product.image}
                                     id={product._id}
+                                    rating={product.rating}
                                 />
                             );
                         })}
