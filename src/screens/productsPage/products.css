@@ -31,6 +31,14 @@
   .products-listing {
     margin-left: 15rem; /* Account for the width of the sidebar */
   }
+
+  .clear {
+    text-decoration: underline;
+  }
+
+  .clear:hover {
+    cursor: pointer;
+  }
   
 
 /* .products-screen {

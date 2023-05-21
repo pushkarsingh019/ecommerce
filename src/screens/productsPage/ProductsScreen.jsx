@@ -65,6 +65,10 @@ const ProductScreen = () => {
             setSelectedCategories([...selectedCategories, categoryName]);
         }
     };
+    const clearFilters = () => {
+        setSelectedCategories([]);
+        setFilteredProducts(products);
+    };
 
     return (
         <section>
@@ -81,7 +85,9 @@ const ProductScreen = () => {
                     <div className="sidebar">
                         <div className="flex">
                             <h4>Filters</h4>
-                            <p>clear</p>
+                            <p onClick={() => clearFilters()} className="clear">
+                                clear
+                            </p>
                         </div>
                         <br />
                         <div>
