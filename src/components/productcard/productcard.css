@@ -1,0 +1,32 @@
+.product-card {
+    padding: 20px 35px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 4px;
+    position: relative;
+}
+
+.product-card button {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.flex {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wishlist {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px 12px;
+    /* height: 28px; */
+    /* width: 28px; */
+}
