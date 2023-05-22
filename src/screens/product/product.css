@@ -1,0 +1,35 @@
+.product-page {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 3rem; */
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+}
+
+.cta {
+    padding: 10px 12px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 8px;
+    border: 0.5px solid;
+}
+
+.primary {
+    background-color: #111827;
+    color: white;
+    border: 2px solid;
+    font-size: 17px;
+}
+
+.select {
+    padding: 3px 4px;
+}
+
+.go-back {
+    font-size: 1.5rem;
+}
+.go-back:hover{
+    cursor: pointer;
+}

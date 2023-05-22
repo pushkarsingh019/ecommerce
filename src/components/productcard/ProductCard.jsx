@@ -1,16 +1,17 @@
 import "./productcard.css";
 import iphoneImage from "../../assets/iphoneImage.jpeg";
-
 import wishlistOutline from "../../assets/wishlist_outline.svg";
 import wishlistAdded from "../../assets/wishlist_added.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ name, description, price, image, rating, id }) => {
     const [inWishlist, setInWishlist] = useState(false);
+    const navigate = useNavigate();
 
     const imageContainerStyles = {
         height: 0,
-        paddingBottom: "70%", // Example aspect ratio, adjust as needed
+        paddingBottom: "90%", // Example aspect ratio, adjust as needed
         position: "relative",
     };
 
@@ -40,19 +41,30 @@ const ProductCard = ({ name, description, price, image, rating, id }) => {
                     onClick={() => setInWishlist(true)}
                 />
             )}
-            <div style={imageContainerStyles}>
-                <img src={iphoneImage} alt="iphoneimage" style={imageStyles} />
+            <div
+                onClick={() => navigate(`/product/${id}`)}
+                className="inner-product-div"
+            >
+                <div style={imageContainerStyles}>
+                    <img
+                        src={iphoneImage}
+                        alt="iphoneimage"
+                        style={imageStyles}
+                    />
+                </div>
+                <br />
+                <br />
+                <h3>{name}</h3>
+                <br />
+                <p>{description}</p>
+                <br />
+                <div className="flex">
+                    <p>{rating}</p>
+                    <p>₹{price}</p>
+                </div>
+                <br />
+                <button>Add to cart</button>
             </div>
-            <h3>{name}</h3>
-            <br />
-            <p>{description}</p>
-            <br />
-            <div className="flex">
-                <p>{rating}</p>
-                <p>₹{price}</p>
-            </div>
-            <br />
-            <button>Add to cart</button>
         </div>
     );
 };
