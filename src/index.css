@@ -30,3 +30,7 @@ button:focus {
   display: flex !important;
   justify-content: space-between !important;
 }
+
+.underline {
+  text-decoration: underline;
+}
