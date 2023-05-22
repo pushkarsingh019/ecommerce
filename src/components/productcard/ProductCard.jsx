@@ -4,10 +4,41 @@ import wishlistOutline from "../../assets/wishlist_outline.svg";
 import wishlistAdded from "../../assets/wishlist_added.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { storeContext } from "../../utils/storeContext";
+import { useEffect } from "react";
 
-const ProductCard = ({ name, description, price, image, rating, id }) => {
-    const [inWishlist, setInWishlist] = useState(false);
+const ProductCard = ({
+    name,
+    description,
+    price,
+    image,
+    rating,
+    id,
+    product,
+}) => {
     const navigate = useNavigate();
+    const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist } =
+        useContext(storeContext);
+    const [inWishlist, setInWishlist] = useState(() =>
+        wishlist.find((item) => item === product) !== undefined ? true : false
+    );
+
+    useEffect(() => {
+        if (inWishlist) {
+            addToWishlist(product);
+        } else {
+            removeFromWishlist(product);
+        }
+    }, [inWishlist]);
+
+    // useEffect(() => {
+    //     setInWishlist(
+    //         wishlist.find((item) => item === product) !== undefined
+    //             ? true
+    //             : false
+    //     );
+    // }, [wishlist]);
 
     const imageContainerStyles = {
         height: 0,
@@ -63,8 +94,10 @@ const ProductCard = ({ name, description, price, image, rating, id }) => {
                     <p>₹{price}</p>
                 </div>
                 <br />
-                <button>Add to cart</button>
             </div>
+            <button onClick={() => addToCart(product)}>
+                {cart.includes(product) ? "In Cart" : "Add To Cart"}
+            </button>
         </div>
     );
 };

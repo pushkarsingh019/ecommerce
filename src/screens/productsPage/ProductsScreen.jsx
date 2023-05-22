@@ -209,6 +209,7 @@ const ProductScreen = () => {
                                         image={product.image}
                                         id={product._id}
                                         rating={product.rating}
+                                        product={product}
                                     />
                                 );
                             })

@@ -21,7 +21,11 @@ export function CartProvider({children}){
         wishlist,
         updateUser : (name) => setUser(name),
         addToCart : product => setCart([...cart, product]),
-        addToWishlist : product => setWishlist([...wishlist, product])
+        addToWishlist : product => setWishlist([...wishlist, product]),
+        removeFromWishlist : product => setWishlist([...wishlist].filter(item => item !== product)),
+        removeFromCart : product => setCart([...cart].filter(item => item !== product)),
+        clearCart : () => setCart([]),
+        clearWishlist : () => setWishlist([]),
     };
 
     return(

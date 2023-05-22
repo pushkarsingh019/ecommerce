@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 
 const WishList = () => {
-    const { wishlist } = useContext(storeContext);
+    const { wishlist, clearWishlist } = useContext(storeContext);
     return (
         <section>
             <Navbar />
@@ -11,6 +11,7 @@ const WishList = () => {
             {wishlist.map((product) => {
                 return <p>{product.name}</p>;
             })}
+            <button onClick={() => clearWishlist()}>Clear Wishlist</button>
         </section>
     );
 };

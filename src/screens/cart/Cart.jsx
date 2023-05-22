@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 
 const CartScreen = () => {
-    const { cart } = useContext(storeContext);
+    const { cart, clearCart } = useContext(storeContext);
     return (
         <section>
             <Navbar />
@@ -19,6 +19,7 @@ const CartScreen = () => {
                     </div>
                 )}
             </div>
+            <button onClick={() => clearCart()}>clear cart</button>
         </section>
     );
 };
