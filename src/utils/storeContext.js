@@ -1,5 +1,5 @@
 import {createContext, useEffect, useState} from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const storeContext = createContext();
@@ -7,8 +7,8 @@ export const storeContext = createContext();
 export function CartProvider({children}){
     const notify = (text) => toast.success(text, {
         position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
+        autoClose: 2000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
@@ -53,7 +53,7 @@ export function CartProvider({children}){
 
     return(
         <storeContext.Provider value={store}>
-            <ToastContainer />
+            <ToastContainer limit={1} transition={Slide} />
             {children}
         </storeContext.Provider>
     )
