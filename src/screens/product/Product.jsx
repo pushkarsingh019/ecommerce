@@ -112,7 +112,7 @@ const Product = () => {
                         <br />
                         <button
                             className="cta primary"
-                            onClick={() => addToCart(product)}
+                            onClick={() => addToCart(product, quantity)}
                         >
                             Add to cart
                         </button>

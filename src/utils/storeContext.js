@@ -20,7 +20,7 @@ export function CartProvider({children}){
         cart,
         wishlist,
         updateUser : (name) => setUser(name),
-        addToCart : product => setCart([...cart, product]),
+        addToCart : (product, quantity = 1) => setCart([...cart, {...product, quantity : Number(quantity)}]),
         addToWishlist : product => setWishlist([...wishlist, product]),
         removeFromWishlist : product => setWishlist([...wishlist].filter(item => item !== product)),
         removeFromCart : product => setCart([...cart].filter(item => item !== product)),

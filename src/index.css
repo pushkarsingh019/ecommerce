@@ -29,8 +29,13 @@ button:focus {
 .flex {
   display: flex !important;
   justify-content: space-between !important;
+  align-items: center;
 }
 
 .underline {
   text-decoration: underline;
+}
+
+.button {
+  padding: 10px 12px;
 }
