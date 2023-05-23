@@ -20,6 +20,7 @@ const WishList = () => {
                                     key={item._id}
                                     name={item.name}
                                     price={item.price}
+                                    product={item}
                                 />
                             );
                         })

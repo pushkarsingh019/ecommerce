@@ -26,6 +26,14 @@ export function CartProvider({children}){
         removeFromCart : product => setCart([...cart].filter(item => item !== product)),
         clearCart : () => setCart([]),
         clearWishlist : () => setWishlist([]),
+        moveToWishlist : product => {
+            store.removeFromCart(product);
+            setWishlist([...wishlist, product])
+        },
+        moveToCart : (product, quantity = 1) => {
+            store.removeFromWishlist(product);
+            setCart([...cart, {...product, quantity : Number(quantity)}])
+        },
     };
 
     return(

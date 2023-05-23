@@ -4,9 +4,10 @@ import { storeContext } from "../../utils/storeContext";
 import iphoneImage from "../../assets/iphoneImage.jpeg";
 import "./cartCard.css";
 
-const CartCard = ({ name, image, price, quantity }) => {
+const CartCard = ({ name, image, price, quantity, product }) => {
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const [cartQuantity, setCartQuantity] = useState(quantity);
+    const { moveToWishlist, removeFromCart } = useContext(storeContext);
 
     const imageStyles = {
         width: "200px",
@@ -41,8 +42,18 @@ const CartCard = ({ name, image, price, quantity }) => {
                 <br />
                 <br />
                 <div className="flex">
-                    <button className="button">move to wishlist</button>
-                    <button className="button">remove from cart</button>
+                    <button
+                        className="button"
+                        onClick={() => moveToWishlist(product)}
+                    >
+                        move to wishlist
+                    </button>
+                    <button
+                        className="button"
+                        onClick={() => removeFromCart(product)}
+                    >
+                        remove from cart
+                    </button>
                     <p className="button">share</p>
                 </div>
             </div>

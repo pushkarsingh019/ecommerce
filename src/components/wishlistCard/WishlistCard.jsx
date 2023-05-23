@@ -5,7 +5,9 @@ import iphoneImage from "../../assets/iphoneImage.jpeg";
 import "./wishlist.css";
 import bin from "../../assets/bin.svg";
 
-const WishlistCard = ({ name, image, price, quantity }) => {
+const WishlistCard = ({ name, image, price, quantity, product }) => {
+    const { moveToCart, removeFromWishlist } = useContext(storeContext);
+
     const imageStyles = {
         width: "200px",
         height: "200px",
@@ -20,8 +22,14 @@ const WishlistCard = ({ name, image, price, quantity }) => {
             <p style={{ width: "50px" }}>
                 <strong>₹{price}</strong>
             </p>
-            <span className="underline">Add to cart</span>
-            <img src={bin} alt="delete" />
+            <span className="underline" onClick={() => moveToCart(product)}>
+                Add to cart
+            </span>
+            <img
+                src={bin}
+                alt="delete"
+                onClick={() => removeFromWishlist(product)}
+            />
         </div>
     );
 };
