@@ -1,0 +1,24 @@
+.wishlist-card {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    display: flex;
+    justify-content: flex-start;
+    gap: 3rem;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #d1d5db;
+    margin-bottom: 1.5rem;
+    width: 50%;
+ }
+ 
+ .product-name {
+     font-size: 22px;
+ }
+
+ .wishlist-screen {
+    text-align: left;
+ }
+
+ .wishlist-items {
+    text-align: left;;
+ }
