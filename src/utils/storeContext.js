@@ -42,19 +42,23 @@ export function CartProvider({children}){
                 notify("added to cart")
             }
         },
-        addToWishlist : product => setWishlist([...wishlist, product]),
+        addToWishlist : product => {
+            const exists = [...wishlist].find(item => item._id === product._id);
+            if(exists === undefined){
+                setWishlist([...wishlist, product])
+            }
+        },
         removeFromWishlist : product => setWishlist([...wishlist].filter(item => item !== product)),
         removeFromCart : product => setCart([...cart].filter(item => item !== product)),
         clearCart : () => setCart([]),
         clearWishlist : () => setWishlist([]),
         moveToWishlist : product => {
             store.removeFromCart(product);
-            setWishlist([...wishlist, product])
+            store.addToWishlist(product)
         },
         moveToCart : (product, quantity = 1) => {
             store.removeFromWishlist(product);
             store.addToCart(product, quantity);
-            // setCart([...cart, {...product, quantity : Number(quantity)}])
         },
         updateQuantity: (product, quantity) => {
             const updatedCart = cart.map(item => item._id === product._id ? {...item, quantity : quantity} : item);
