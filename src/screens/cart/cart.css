@@ -1,0 +1,13 @@
+.cart-screen {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 3rem;
+    /* display: flex;
+    justify-content: space-between; */
+    color: red;
+}
+
+.summary {
+    padding: 10px 15px;
+    text-align: center;
+}

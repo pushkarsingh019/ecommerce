@@ -1,17 +1,74 @@
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const storeContext = createContext();
 
 export function CartProvider({children}){
+    const notify = (text) => toast.success(text, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     const [user, setUser] = useState("pushkar singh");
+    const [cart, setCart] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
+    const [wishlist, setWishlist] = useState(localStorage.getItem("wishlist") ? JSON.parse(localStorage.getItem("wishlist")) : []);
+
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
+
+    useEffect(() => {
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }, [wishlist]);
 
     const store = {
         user,
-        updateUser : (name) => setUser(name)
+        cart,
+        wishlist,
+        updateUser : (name) => setUser(name),
+        addToCart : (product, quantity = 1) => {
+            const exists = [...cart].find(item => item._id === product._id);
+            if(exists){
+                notify("item already in cart")
+            }
+            else{
+                setCart([...cart, {...product, quantity : Number(quantity)}]);
+                notify("added to cart")
+            }
+        },
+        addToWishlist : product => {
+            const exists = [...wishlist].find(item => item._id === product._id);
+            if(exists === undefined){
+                setWishlist([...wishlist, product])
+            }
+        },
+        removeFromWishlist : product => setWishlist([...wishlist].filter(item => item !== product)),
+        removeFromCart : product => setCart([...cart].filter(item => item !== product)),
+        clearCart : () => setCart([]),
+        clearWishlist : () => setWishlist([]),
+        moveToWishlist : product => {
+            store.removeFromCart(product);
+            store.addToWishlist(product)
+        },
+        moveToCart : (product, quantity = 1) => {
+            store.removeFromWishlist(product);
+            store.addToCart(product, quantity);
+        },
+        updateQuantity: (product, quantity) => {
+            const updatedCart = cart.map(item => item._id === product._id ? {...item, quantity : quantity} : item);
+            setCart(updatedCart);
+        },
     };
 
     return(
         <storeContext.Provider value={store}>
+            <ToastContainer limit={1} transition={Slide} />
             {children}
         </storeContext.Provider>
     )

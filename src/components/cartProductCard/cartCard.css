@@ -1,0 +1,12 @@
+.cart-card {
+   display: grid;
+   grid-template-columns: 1fr 2fr;
+}
+
+.product-name {
+    font-size: 22px;
+}
+
+select {
+    padding: 4px;
+}

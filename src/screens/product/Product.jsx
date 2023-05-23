@@ -5,6 +5,8 @@ import axios from "axios";
 import { backendUrl } from "../../utils/config";
 import { useState } from "react";
 import iphoneImage from "../../assets/iphoneImage.jpeg";
+import { useContext } from "react";
+import { storeContext } from "../../utils/storeContext";
 
 import "./product.css";
 
@@ -14,6 +16,8 @@ const Product = () => {
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    const { addToCart, addToWishlist } = useContext(storeContext);
 
     const imageStyles = {
         height: "450px",
@@ -98,12 +102,20 @@ const Product = () => {
                                 : "Out of Stock"}
                         </p>
                         <br />
-                        <button className="cta secondary">
+                        <button
+                            className="cta secondary"
+                            onClick={() => addToWishlist(product)}
+                        >
                             Add to Wishlist
                         </button>
                         <br />
                         <br />
-                        <button className="cta primary">Add to cart</button>
+                        <button
+                            className="cta primary"
+                            onClick={() => addToCart(product, quantity)}
+                        >
+                            Add to cart
+                        </button>
                     </div>
                 </div>
             </main>

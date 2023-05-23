@@ -7,6 +7,8 @@ import ProductScreen from "./screens/productsPage/ProductsScreen";
 import ProfileScreen from "./screens/profilePage/ProfileScreen";
 import WishList from "./screens/wishlist/WishList";
 
+import "react-toastify/dist/ReactToastify.css";
+
 export default function App() {
     return (
         <BrowserRouter>
