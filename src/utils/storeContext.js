@@ -33,8 +33,14 @@ export function CartProvider({children}){
         wishlist,
         updateUser : (name) => setUser(name),
         addToCart : (product, quantity = 1) => {
-            setCart([...cart, {...product, quantity : Number(quantity)}]);
-            notify("added to cart")
+            const exists = [...cart].find(item => item._id === product._id);
+            if(exists){
+                notify("item already in cart")
+            }
+            else{
+                setCart([...cart, {...product, quantity : Number(quantity)}]);
+                notify("added to cart")
+            }
         },
         addToWishlist : product => setWishlist([...wishlist, product]),
         removeFromWishlist : product => setWishlist([...wishlist].filter(item => item !== product)),
