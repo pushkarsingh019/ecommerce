@@ -41,3 +41,15 @@
     font-size: 18px;
     font-weight: 600;
 }
+
+.notification {
+   position: absolute;
+   top: -10px;
+   right: 4;
+   color: #dc2626;
+   font-size: 700;
+}
+
+.link {
+    position: relative;
+}
