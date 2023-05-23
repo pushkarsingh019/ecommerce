@@ -49,6 +49,10 @@ export function CartProvider({children}){
             store.removeFromWishlist(product);
             setCart([...cart, {...product, quantity : Number(quantity)}])
         },
+        updateQuantity: (product, quantity) => {
+            const updatedCart = cart.map(item => item._id === product._id ? {...item, quantity : quantity} : item);
+            setCart(updatedCart);
+        },
     };
 
     return(
