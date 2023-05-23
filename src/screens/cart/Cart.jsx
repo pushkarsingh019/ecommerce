@@ -11,7 +11,7 @@ const CartScreen = () => {
         <section>
             <Navbar />
             <main className="screen">
-                <h2>my shopping cart ({cart.length} items)</h2>
+                <h2>my shopping cart ({cart.length} products)</h2>
                 <br />
                 <br />
 
@@ -34,7 +34,29 @@ const CartScreen = () => {
                             </div>
                         )}
                     </div>
-                    <div className="summary">sumary of the items</div>
+                    <div className="summary">
+                        <h3>
+                            Subtotal (
+                            {cart.reduce(
+                                (totalItems, currentItem) =>
+                                    totalItems + currentItem.quantity,
+                                0
+                            )}{" "}
+                            items)
+                        </h3>
+                        <br />
+                        <p>
+                            Total cost : ₹
+                            {cart.reduce(
+                                (totalCost, currentItem) =>
+                                    totalCost +
+                                    currentItem.price * currentItem.quantity,
+                                0
+                            )}
+                        </p>
+                        <br />
+                        <button className="button">checkout</button>
+                    </div>
                 </div>
             </main>
             <button onClick={() => clearCart()}>clear cart</button>
