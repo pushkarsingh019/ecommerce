@@ -1,13 +1,15 @@
+import axios from "axios";
 import {createContext, useEffect, useState} from "react";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { backendUrl } from "./config";
 
 export const storeContext = createContext();
 
 export function CartProvider({children}){
     const notify = (text) => toast.success(text, {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
@@ -15,9 +17,10 @@ export function CartProvider({children}){
         progress: undefined,
         theme: "light",
         });
-    const [user, setUser] = useState("pushkar singh");
+    const [user, setUser] = useState(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
     const [cart, setCart] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     const [wishlist, setWishlist] = useState(localStorage.getItem("wishlist") ? JSON.parse(localStorage.getItem("wishlist")) : []);
+    const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token") ? localStorage.getItem("access_token") : undefined);
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -26,6 +29,11 @@ export function CartProvider({children}){
     useEffect(() => {
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
     }, [wishlist]);
+
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("access_token", accessToken);
+    }, [user])
 
     const store = {
         user,
@@ -64,6 +72,26 @@ export function CartProvider({children}){
             const updatedCart = cart.map(item => item._id === product._id ? {...item, quantity : quantity} : item);
             setCart(updatedCart);
         },
+        signupUser : async (signupCredentials) => {
+            const {data} = await axios.post(`${backendUrl}/api/auth/signup`, signupCredentials);
+            const {user, token} = data;
+            setUser(user);
+            setAccessToken(token);
+        },
+        loginUser : async (loginCredentials) => {
+            const {data} = await axios.post(`${backendUrl}/api/auth/login`, loginCredentials);
+            const {user, access_token, message, status} = data;
+            if(status === 200){
+                setUser(user);
+                setAccessToken(access_token);
+                return message
+            }
+            else {
+                setUser([])
+                setAccessToken([])
+                return message
+            }
+        }
     };
 
     return(

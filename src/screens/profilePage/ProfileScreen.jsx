@@ -4,12 +4,12 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 
 const ProfileScreen = () => {
-    const { user, updateUser } = useContext(storeContext);
+    const { user } = useContext(storeContext);
+    console.log(user);
     return (
         <section>
             <Navbar />
-            <h2>Hey, {user}</h2>
-            <button onClick={() => updateUser("elon musk")}>Update user</button>
+            <h2>Hey, {user.name}</h2>
         </section>
     );
 };
