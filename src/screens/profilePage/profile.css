@@ -1,0 +1,23 @@
+.profile-flex {
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+}
+
+
+.options-bar {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.profile-flex h3 {
+    background-color: #d1d5db;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.profile-flex h3:hover{
+    cursor: pointer;
+}

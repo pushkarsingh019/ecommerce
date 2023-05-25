@@ -84,13 +84,17 @@ export function CartProvider({children}){
             if(status === 200){
                 setUser(user);
                 setAccessToken(access_token);
-                return message
+                return true
             }
             else {
                 setUser([])
                 setAccessToken([])
                 return message
             }
+        },
+        logout : () => {
+            setUser({})
+            setAccessToken("")
         }
     };
 
