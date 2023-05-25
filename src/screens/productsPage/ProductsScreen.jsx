@@ -72,17 +72,25 @@ const ProductScreen = () => {
     }, [selectedCategories, ratingFilter, sortOrder, products]);
 
     const fetchProducts = async () => {
-        const { data } = await axios.get(`${backendUrl}/api/products`);
-        setProducts(data);
-        category
-            ? setFilteredProducts(
-                  data.filter((product) => product.category === category)
-              )
-            : setFilteredProducts(data);
+        try {
+            const { data } = await axios.get(`${backendUrl}/api/products`);
+            setProducts(data);
+            category
+                ? setFilteredProducts(
+                      data.filter((product) => product.category === category)
+                  )
+                : setFilteredProducts(data);
+        } catch (error) {
+            console.log(error.message);
+        }
     };
     const fetchCategories = async () => {
-        const { data } = await axios.get(`${backendUrl}/api/categories`);
-        setCategories(data);
+        try {
+            const { data } = await axios.get(`${backendUrl}/api/categories`);
+            setCategories(data);
+        } catch (error) {
+            console.log(error.message);
+        }
     };
     const onSelectedCategoryChange = async (categoryName) => {
         const CategorySelected = selectedCategories.includes(categoryName);

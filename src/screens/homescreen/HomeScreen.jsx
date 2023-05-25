@@ -13,8 +13,12 @@ import { backendUrl } from "../../utils/config";
 const HomeScreen = () => {
     const [categories, setCategories] = useState([]);
     const fetchCategories = async () => {
-        const { data } = await axios.get(`${backendUrl}/api/categories`);
-        setCategories(data);
+        try {
+            const { data } = await axios.get(`${backendUrl}/api/categories`);
+            setCategories(data);
+        } catch (error) {
+            console.log(error.message);
+        }
     };
 
     useEffect(() => {

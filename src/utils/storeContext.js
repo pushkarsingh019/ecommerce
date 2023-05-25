@@ -73,23 +73,31 @@ export function CartProvider({children}){
             setCart(updatedCart);
         },
         signupUser : async (signupCredentials) => {
-            const {data} = await axios.post(`${backendUrl}/api/auth/signup`, signupCredentials);
-            const {user, token} = data;
-            setUser(user);
-            setAccessToken(token);
+            try {
+                const {data} = await axios.post(`${backendUrl}/api/auth/signup`, signupCredentials);
+                const {user, token} = data;
+                setUser(user);
+                setAccessToken(token);
+            } catch (error) {
+                console.log(error.message)
+            }  
         },
         loginUser : async (loginCredentials) => {
-            const {data} = await axios.post(`${backendUrl}/api/auth/login`, loginCredentials);
-            const {user, access_token, message, status} = data;
-            if(status === 200){
-                setUser(user);
-                setAccessToken(access_token);
-                return true
-            }
-            else {
-                setUser([])
-                setAccessToken([])
-                return message
+            try {
+                const {data} = await axios.post(`${backendUrl}/api/auth/login`, loginCredentials);
+                const {user, access_token, message, status} = data;
+                if(status === 200){
+                    setUser(user);
+                    setAccessToken(access_token);
+                    return true
+                }
+                else {
+                    setUser([])
+                    setAccessToken([])
+                    return message
+                }
+            } catch (error) {
+                console.log(error.message)
             }
         },
         logout : () => {
