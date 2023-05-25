@@ -27,7 +27,7 @@ const Signup = () => {
             signupUser(formData);
             setFormData({});
             setConfirmPassword("");
-            navigate(-1);
+            navigate(`/profile`);
         } else {
             setErrorMessage("passwords dont match, try again");
         }
