@@ -86,6 +86,7 @@ export function CartProvider({children}){
             try {
                 const {data} = await axios.post(`${backendUrl}/api/auth/login`, loginCredentials);
                 const {user, access_token, message, status} = data;
+                console.log(data);
                 if(status === 200){
                     setUser(user);
                     setAccessToken(access_token);
@@ -103,6 +104,15 @@ export function CartProvider({children}){
         logout : () => {
             setUser({})
             setAccessToken("")
+        },
+        newAddress : async (addressData) => {
+            console.log(addressData);
+            try {
+                const {data} = await axios.post(`${backendUrl}/api/user/updateAddress`, {userId : user._id, addressDetails : addressData});
+                setUser(data);
+            } catch (error) {
+                console.error(error.message)
+            }
         }
     };
 

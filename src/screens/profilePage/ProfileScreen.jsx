@@ -23,7 +23,15 @@ const NoUserScreen = () => {
     );
 };
 
-const Output = ({ choice, user, onLogout }) => {
+const Output = ({ choice, user, onLogout, onAddressUpdate }) => {
+    const [formData, setFormData] = useState({ default: false });
+
+    const handleAddress = (event) => {
+        event.preventDefault();
+        onAddressUpdate(formData);
+        setFormData({ default: false });
+    };
+
     if (choice === 1) {
         return (
             <section className="profile-component">
@@ -73,6 +81,68 @@ const Output = ({ choice, user, onLogout }) => {
                               );
                           })
                     : "No aditional address, add one!"}
+
+                <br />
+                <br />
+                <br />
+                <form onSubmit={handleAddress}>
+                    <label>
+                        <small>Address</small>
+                    </label>
+                    <br />
+                    <input
+                        type="text"
+                        placeholder="your address"
+                        onChange={(event) =>
+                            setFormData({
+                                ...formData,
+                                address: event.target.value,
+                            })
+                        }
+                        value={formData.address ? formData.address : ""}
+                        required
+                    />
+                    <br />
+                    <br />
+                    <label>
+                        <small>Contact Number</small>
+                    </label>
+                    <br />
+                    <input
+                        type="number"
+                        placeholder="contact number"
+                        onChange={(event) =>
+                            setFormData({
+                                ...formData,
+                                contactNumber: event.target.value,
+                            })
+                        }
+                        value={
+                            formData.contactNumber ? formData.contactNumber : ""
+                        }
+                        required
+                    />
+                    <br />
+                    <br />
+                    <input
+                        type="checkbox"
+                        onChange={() => {
+                            // setIsDefault(!isDefault);
+                            // setFormData({ ...formData, isDefault: !isDefault });
+                            setFormData({
+                                ...formData,
+                                default: !formData.default,
+                            });
+                        }}
+                        checked={formData.default}
+                    />
+                    <label> Make this my default address</label>
+                    <br />
+                    <br />
+                    <button type="submit" className="button">
+                        add new address
+                    </button>
+                </form>
             </section>
         );
     } else if (choice === 3) {
@@ -83,11 +153,15 @@ const Output = ({ choice, user, onLogout }) => {
 };
 
 const ProfileScreen = () => {
-    const { user, logout } = useContext(storeContext);
+    const { user, logout, newAddress } = useContext(storeContext);
     const [choice, setChoice] = useState(1);
 
     const handleLogout = () => {
         logout();
+    };
+
+    const handleNewAddress = (addressData) => {
+        newAddress(addressData);
     };
 
     return (
@@ -111,6 +185,7 @@ const ProfileScreen = () => {
                             choice={choice}
                             user={user}
                             onLogout={handleLogout}
+                            onAddressUpdate={handleNewAddress}
                         />
                     </section>
                 )}
