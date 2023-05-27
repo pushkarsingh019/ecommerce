@@ -91,8 +91,8 @@ const Signup = () => {
                                 <img
                                     src={
                                         hidePassword.password
-                                            ? showPassword
-                                            : hiddenPassword
+                                            ? hiddenPassword
+                                            : showPassword
                                     }
                                     alt="password"
                                 />
@@ -128,8 +128,8 @@ const Signup = () => {
                                 <img
                                     src={
                                         hidePassword.checkPassword
-                                            ? showPassword
-                                            : hiddenPassword
+                                            ? hiddenPassword
+                                            : showPassword
                                     }
                                     alt="password"
                                 />
