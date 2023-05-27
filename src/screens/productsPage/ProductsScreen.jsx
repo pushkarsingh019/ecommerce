@@ -1,18 +1,20 @@
 import { useParams } from "react-router-dom";
 import Navbar from "../../components/navigation/Navbar";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import axios from "axios";
 import { backendUrl } from "../../utils/config";
 import { useState } from "react";
 import ProductCard from "../../components/productcard/ProductCard";
 
+import { storeContext } from "../../utils/storeContext";
+
 import "./products.css";
 
 const ProductScreen = () => {
     const { category } = useParams();
-    const [products, setProducts] = useState([]);
+    const { loading, fetchCategories, categories, products, fetchProducts } =
+        useContext(storeContext);
     const [filteredProducts, setFilteredProducts] = useState(products);
-    const [categories, setCategories] = useState([]);
     const [sortOrder, setSortOrder] = useState(); // 0 -- low to high, 1 - high to low
     const [selectedCategories, setSelectedCategories] = useState(
         category ? [category] : []
@@ -70,28 +72,6 @@ const ProductScreen = () => {
 
         setFilteredProducts(sortedProducts);
     }, [selectedCategories, ratingFilter, sortOrder, products]);
-
-    const fetchProducts = async () => {
-        try {
-            const { data } = await axios.get(`${backendUrl}/api/products`);
-            setProducts(data);
-            category
-                ? setFilteredProducts(
-                      data.filter((product) => product.category === category)
-                  )
-                : setFilteredProducts(data);
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-    const fetchCategories = async () => {
-        try {
-            const { data } = await axios.get(`${backendUrl}/api/categories`);
-            setCategories(data);
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
     const onSelectedCategoryChange = async (categoryName) => {
         const CategorySelected = selectedCategories.includes(categoryName);
         if (CategorySelected) {
@@ -138,26 +118,32 @@ const ProductScreen = () => {
                         <div>
                             <strong>Category</strong>
                             <br />
-                            <div>
-                                {categories.map((category) => {
-                                    return (
-                                        <div key={category._id}>
-                                            <input
-                                                type="checkbox"
-                                                onChange={() =>
-                                                    onSelectedCategoryChange(
+                            {loading === true ? (
+                                <p>loading...</p>
+                            ) : (
+                                <div>
+                                    {categories.map((category) => {
+                                        return (
+                                            <div key={category._id}>
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={() =>
+                                                        onSelectedCategoryChange(
+                                                            category.categoryName
+                                                        )
+                                                    }
+                                                    checked={selectedCategories.includes(
                                                         category.categoryName
-                                                    )
-                                                }
-                                                checked={selectedCategories.includes(
-                                                    category.categoryName
-                                                )}
-                                            />{" "}
-                                            <span>{category.categoryName}</span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                                                    )}
+                                                />{" "}
+                                                <span>
+                                                    {category.categoryName}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                         <br />
                         <br />
@@ -202,10 +188,14 @@ const ProductScreen = () => {
                     </div>
                     <div className="products-listing">
                         {filteredProducts.length === 0 ? (
-                            <div>
-                                <h3>ahhh, no products to show...</h3>
-                                <p>check after sometime...</p>
-                            </div>
+                            loading === true ? (
+                                <p>loading...</p>
+                            ) : (
+                                <div>
+                                    <h3>ahhh, no products to show...</h3>
+                                    <p>check after sometime...</p>
+                                </div>
+                            )
                         ) : (
                             filteredProducts.map((product) => {
                                 return (

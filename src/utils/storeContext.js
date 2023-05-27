@@ -21,6 +21,10 @@ export function CartProvider({children}){
     const [cart, setCart] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     const [wishlist, setWishlist] = useState(localStorage.getItem("wishlist") ? JSON.parse(localStorage.getItem("wishlist")) : []);
     const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token") ? localStorage.getItem("access_token") : undefined);
+    const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [product, setProduct] = useState();
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -39,6 +43,45 @@ export function CartProvider({children}){
         user,
         cart,
         wishlist,
+        loading,
+        categories,
+        products,
+        product,
+        fetchCategories : async () => {
+            setLoading(true)
+            try {
+                const { data } = await axios.get(`${backendUrl}/api/categories`);
+                setCategories(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.message);
+            }
+        },
+        fetchProducts : async () => {
+            setLoading(true)
+            try {
+                const { data } = await axios.get(`${backendUrl}/api/products`);
+                setProducts(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.message);
+            }
+        },
+        fetchProductDetails : async (productId) => {
+            console.log("fetchinf")
+            setLoading(true)
+            try {
+                const { data } = await axios.get(
+                    `${backendUrl}/api/product/${productId}`
+                );
+                console.log(data)
+                setProduct(data);
+                console.log(product);
+                setLoading(false)
+            } catch (error) {
+                console.log(error.message)
+            }
+        },
         updateUser : (name) => setUser(name),
         addToCart : (product, quantity = 1) => {
             const exists = [...cart].find(item => item._id === product._id);
@@ -74,19 +117,22 @@ export function CartProvider({children}){
         },
         signupUser : async (signupCredentials) => {
             try {
+                setLoading(true);
                 const {data} = await axios.post(`${backendUrl}/api/auth/signup`, signupCredentials);
                 const {user, token} = data;
                 setUser(user);
                 setAccessToken(token);
+                setLoading(false);
             } catch (error) {
                 console.log(error.message)
             }  
         },
         loginUser : async (loginCredentials) => {
             try {
+                setLoading(true)
                 const {data} = await axios.post(`${backendUrl}/api/auth/login`, loginCredentials);
                 const {user, access_token, message, status} = data;
-                console.log(data);
+                setLoading(false);
                 if(status === 200){
                     setUser(user);
                     setAccessToken(access_token);
@@ -106,10 +152,11 @@ export function CartProvider({children}){
             setAccessToken("")
         },
         newAddress : async (addressData) => {
-            console.log(addressData);
+            setLoading(true)
             try {
                 const {data} = await axios.post(`${backendUrl}/api/user/updateAddress`, {userId : user._id, addressDetails : addressData});
                 setUser(data);
+                setLoading(false)
             } catch (error) {
                 console.error(error.message)
             }

@@ -12,7 +12,7 @@ import hiddenPassword from "../../assets/hidePassword.svg";
 const Signup = () => {
     const [formData, setFormData] = useState({});
     const [confirmPassword, setConfirmPassword] = useState("");
-    const { signupUser } = useContext(storeContext);
+    const { signupUser, loading } = useContext(storeContext);
     const [errorMessage, setErrorMessage] = useState("");
     const [hidePassword, setHidePassword] = useState({
         password: true,
@@ -27,7 +27,9 @@ const Signup = () => {
             signupUser(formData);
             setFormData({});
             setConfirmPassword("");
-            navigate(`/profile`);
+            if (loading === false) {
+                navigate(`/profile`);
+            }
         } else {
             setErrorMessage("passwords dont match, try again");
         }
@@ -161,7 +163,11 @@ const Signup = () => {
                         <br />
                         <br />
                         <div className="center">
-                            <small>{errorMessage}</small>
+                            <small>
+                                {loading
+                                    ? "creating your account..."
+                                    : errorMessage}
+                            </small>
                         </div>
                     </form>
                 </div>

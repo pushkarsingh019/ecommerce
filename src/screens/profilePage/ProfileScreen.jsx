@@ -153,7 +153,7 @@ const Output = ({ choice, user, onLogout, onAddressUpdate }) => {
 };
 
 const ProfileScreen = () => {
-    const { user, logout, newAddress } = useContext(storeContext);
+    const { user, logout, newAddress, loading } = useContext(storeContext);
     const [choice, setChoice] = useState(1);
 
     const handleLogout = () => {
@@ -181,12 +181,16 @@ const ProfileScreen = () => {
                         </div>
                         <br />
                         <br />
-                        <Output
-                            choice={choice}
-                            user={user}
-                            onLogout={handleLogout}
-                            onAddressUpdate={handleNewAddress}
-                        />
+                        {loading ? (
+                            <p>loading...</p>
+                        ) : (
+                            <Output
+                                choice={choice}
+                                user={user}
+                                onLogout={handleLogout}
+                                onAddressUpdate={handleNewAddress}
+                            />
+                        )}
                     </section>
                 )}
             </main>

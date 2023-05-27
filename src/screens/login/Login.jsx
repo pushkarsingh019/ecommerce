@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [formData, setFormData] = useState({});
     const [message, setMessage] = useState("");
-    const { loginUser } = useContext(storeContext);
+    const { loginUser, loading } = useContext(storeContext);
     const navigate = useNavigate();
 
     const onLogin = async (event) => {
@@ -67,7 +67,7 @@ const Login = () => {
                         <br />
                         <br />
                         <p className="center">
-                            <code>{message}</code>
+                            <code>{loading ? `logging in...` : message}</code>
                         </p>
                         <br />
                         <div className="center">
