@@ -12,28 +12,34 @@ import "./product.css";
 
 const Product = () => {
     const { productId } = useParams();
-    const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    const { addToCart, addToWishlist } = useContext(storeContext);
+    const { addToCart, addToWishlist, product, fetchProductDetails, loading } =
+        useContext(storeContext);
 
     const imageStyles = {
         height: "450px",
         width: "400px",
     };
 
-    const fetchProductDetails = async () => {
-        const { data } = await axios.get(
-            `${backendUrl}/api/product/${productId}`
-        );
-        setProduct(data);
-    };
-
     useEffect(() => {
-        fetchProductDetails();
+        fetchProductDetails(productId);
     }, []);
+
+    if (loading) {
+        return (
+            <section>
+                <Navbar />
+                <p className="center-form">loading...</p>
+            </section>
+        );
+    }
+
+    if (product === undefined) {
+        return <p>product is not defined</p>;
+    }
 
     return (
         <section>
