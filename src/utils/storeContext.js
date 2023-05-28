@@ -8,7 +8,7 @@ export const storeContext = createContext();
 
 export function CartProvider({children}){
     const notify = (text) => toast.success(text, {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
@@ -96,16 +96,23 @@ export function CartProvider({children}){
         addToWishlist : product => {
             const exists = [...wishlist].find(item => item._id === product._id);
             if(exists === undefined){
-                setWishlist([...wishlist, product])
+                setWishlist([...wishlist, product]);
+                notify("product added to wishlist");
             }
+
         },
-        removeFromWishlist : product => setWishlist([...wishlist].filter(item => item !== product)),
+        removeFromWishlist : product => {
+            const exists = [...wishlist].find(item => item._id === product._id);
+            if(exists !== undefined){
+                setWishlist([...wishlist].filter(item => item !== product)); 
+            }            
+        },
         removeFromCart : product => setCart([...cart].filter(item => item !== product)),
         clearCart : () => setCart([]),
         clearWishlist : () => setWishlist([]),
         moveToWishlist : product => {
             store.removeFromCart(product);
-            store.addToWishlist(product)
+            store.addToWishlist(product);
         },
         moveToCart : (product, quantity = 1) => {
             store.removeFromWishlist(product);
@@ -165,7 +172,7 @@ export function CartProvider({children}){
 
     return(
         <storeContext.Provider value={store}>
-            <ToastContainer limit={1} transition={Slide} />
+            <ToastContainer limit={3} transition={Slide} />
             {children}
         </storeContext.Provider>
     )
