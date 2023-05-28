@@ -11,9 +11,7 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 
 // external dependencies
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { backendUrl } from "../../utils/config";
+import { useEffect } from "react";
 
 const HomeScreen = () => {
     const { categories, loading, fetchCategories } = useContext(storeContext);

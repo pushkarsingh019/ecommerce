@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/Loading/Loading";
 
 // importing assets
 import showPassword from "../../assets/showPassword.svg";

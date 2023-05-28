@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navigation/Navbar";
-import axios from "axios";
-import { backendUrl } from "../../utils/config";
 import { useState } from "react";
 import iphoneImage from "../../assets/iphoneImage.jpeg";
 import { useContext } from "react";

@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import Navbar from "../../components/navigation/Navbar";
 import { useEffect, useContext } from "react";
-import axios from "axios";
-import { backendUrl } from "../../utils/config";
 import { useState } from "react";
 import ProductCard from "../../components/productcard/ProductCard";
 import Loader from "../../components/Loading/Loading";
