@@ -25,13 +25,36 @@ const NoUserScreen = () => {
     );
 };
 
-const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
+const Output = ({
+    choice,
+    user,
+    onLogout,
+    onAddressUpdate,
+    onDelete,
+    onUpdate,
+}) => {
     const [formData, setFormData] = useState({ default: false });
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleAddress = (event) => {
         event.preventDefault();
         onAddressUpdate(formData);
         setFormData({ default: false });
+    };
+
+    const handleAddressUpdate = (addressDetails) => {
+        setFormData({
+            id: addressDetails.id,
+            address: addressDetails.address,
+            contactNumber: addressDetails.contactNumber,
+            default: addressDetails.default,
+        });
+        setIsEditing(true);
+    };
+
+    const handleUpdatedForm = (event) => {
+        event.preventDefault();
+        onUpdate(formData);
     };
 
     if (choice === 1) {
@@ -60,8 +83,12 @@ const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
                         return (
                             <div key={address.id} className="address-component">
                                 <p>Address : {address.address}</p>
-                                <p>Phone Number : {address.number}</p>
-                                <button>Edit</button>
+                                <p>Phone Number : {address.contactNumber}</p>
+                                <button
+                                    onClick={() => handleAddressUpdate(address)}
+                                >
+                                    Edit
+                                </button>
                                 <button onClick={() => onDelete(address.id)}>
                                     Delete
                                 </button>
@@ -83,7 +110,13 @@ const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
                                   >
                                       <p>Address : {address.address}</p>
                                       <p>Phone Number : {address.number}</p>
-                                      <button>Edit</button>
+                                      <button
+                                          onClick={() =>
+                                              handleAddressUpdate(address)
+                                          }
+                                      >
+                                          Edit
+                                      </button>
                                       <button
                                           onClick={() => onDelete(address.id)}
                                       >
@@ -97,7 +130,7 @@ const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
                 <br />
                 <br />
                 <br />
-                <form onSubmit={handleAddress}>
+                <form onSubmit={isEditing ? handleUpdatedForm : handleAddress}>
                     <label>
                         <small>Address</small>
                     </label>
@@ -152,7 +185,7 @@ const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
                     <br />
                     <br />
                     <button type="submit" className="button">
-                        add new address
+                        {isEditing ? "update address" : "add new address"}
                     </button>
                 </form>
             </section>
@@ -165,7 +198,7 @@ const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
 };
 
 const ProfileScreen = () => {
-    const { user, logout, newAddress, loading, deleteAddress } =
+    const { user, logout, newAddress, loading, deleteAddress, updateAddress } =
         useContext(storeContext);
     const [choice, setChoice] = useState(1);
 
@@ -178,6 +211,8 @@ const ProfileScreen = () => {
     };
 
     const handleAddressDeletion = (addressId) => deleteAddress(addressId);
+    const handleAddressUpdate = (addressDetails) =>
+        updateAddress(addressDetails);
 
     return (
         <section>
@@ -207,6 +242,7 @@ const ProfileScreen = () => {
                                 onLogout={handleLogout}
                                 onAddressUpdate={handleNewAddress}
                                 onDelete={handleAddressDeletion}
+                                onUpdate={handleAddressUpdate}
                             />
                         )}
                     </section>

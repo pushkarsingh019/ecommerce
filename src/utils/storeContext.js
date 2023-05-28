@@ -181,6 +181,22 @@ export function CartProvider({children}){
             } catch (error) {
                 console.log(error.message)
             }
+        },
+        updateAddress : async (addressDetails) => {
+            setLoading(true);
+            try {
+                const {data} = await axios.put(`${backendUrl}/api/user/address`, {addressDetails : addressDetails}, {
+                    headers : {
+                        authorization : accessToken,
+                    }
+                });
+                setUser(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.message)
+                alert(`${error.message}`)
+                setLoading(false)
+            }
         }
     };
 
