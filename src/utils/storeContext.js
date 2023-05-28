@@ -161,11 +161,25 @@ export function CartProvider({children}){
         newAddress : async (addressData) => {
             setLoading(true)
             try {
-                const {data} = await axios.post(`${backendUrl}/api/user/updateAddress`, {userId : user._id, addressDetails : addressData});
+                const {data} = await axios.post(`${backendUrl}/api/user/address`, {userId : user._id, addressDetails : addressData});
                 setUser(data);
                 setLoading(false)
             } catch (error) {
                 console.error(error.message)
+            }
+        },
+        deleteAddress : async (addressId) => {
+            setLoading(true)
+            try {
+                const {data} = await axios.delete(`${backendUrl}/api/user/address/${addressId}`, {
+                    headers : {
+                        authorization : accessToken,
+                    }
+                });
+                setUser(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.message)
             }
         }
     };

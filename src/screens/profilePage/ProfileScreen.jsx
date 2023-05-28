@@ -25,7 +25,7 @@ const NoUserScreen = () => {
     );
 };
 
-const Output = ({ choice, user, onLogout, onAddressUpdate }) => {
+const Output = ({ choice, user, onLogout, onAddressUpdate, onDelete }) => {
     const [formData, setFormData] = useState({ default: false });
 
     const handleAddress = (event) => {
@@ -61,6 +61,10 @@ const Output = ({ choice, user, onLogout, onAddressUpdate }) => {
                             <div key={address.id} className="address-component">
                                 <p>Address : {address.address}</p>
                                 <p>Phone Number : {address.number}</p>
+                                <button>Edit</button>
+                                <button onClick={() => onDelete(address.id)}>
+                                    Delete
+                                </button>
                             </div>
                         );
                     })}
@@ -79,6 +83,12 @@ const Output = ({ choice, user, onLogout, onAddressUpdate }) => {
                                   >
                                       <p>Address : {address.address}</p>
                                       <p>Phone Number : {address.number}</p>
+                                      <button>Edit</button>
+                                      <button
+                                          onClick={() => onDelete(address.id)}
+                                      >
+                                          Delete
+                                      </button>
                                   </div>
                               );
                           })
@@ -155,7 +165,8 @@ const Output = ({ choice, user, onLogout, onAddressUpdate }) => {
 };
 
 const ProfileScreen = () => {
-    const { user, logout, newAddress, loading } = useContext(storeContext);
+    const { user, logout, newAddress, loading, deleteAddress } =
+        useContext(storeContext);
     const [choice, setChoice] = useState(1);
 
     const handleLogout = () => {
@@ -165,6 +176,8 @@ const ProfileScreen = () => {
     const handleNewAddress = (addressData) => {
         newAddress(addressData);
     };
+
+    const handleAddressDeletion = (addressId) => deleteAddress(addressId);
 
     return (
         <section>
@@ -193,6 +206,7 @@ const ProfileScreen = () => {
                                 user={user}
                                 onLogout={handleLogout}
                                 onAddressUpdate={handleNewAddress}
+                                onDelete={handleAddressDeletion}
                             />
                         )}
                     </section>
