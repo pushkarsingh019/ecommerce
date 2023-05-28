@@ -20,11 +20,11 @@ const Signup = () => {
     });
     const navigate = useNavigate();
 
-    const onSignup = (event) => {
+    const onSignup = async (event) => {
         event.preventDefault();
         const passwordMatch = formData.password === confirmPassword;
         if (passwordMatch) {
-            signupUser(formData);
+            await signupUser(formData);
             setFormData({});
             setConfirmPassword("");
             if (loading === false) {
@@ -165,7 +165,7 @@ const Signup = () => {
                         <div className="center">
                             <small>
                                 {loading
-                                    ? "creating your account..."
+                                    ? `creating your account...`
                                     : errorMessage}
                             </small>
                         </div>

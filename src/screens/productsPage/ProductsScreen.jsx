@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import Navbar from "../../components/navigation/Navbar";
 import { useEffect, useContext } from "react";
-import axios from "axios";
-import { backendUrl } from "../../utils/config";
 import { useState } from "react";
 import ProductCard from "../../components/productcard/ProductCard";
+import Loader from "../../components/Loading/Loading";
+import Spinner from "../../components/spinner/Spinner";
 
 import { storeContext } from "../../utils/storeContext";
 
@@ -119,7 +119,7 @@ const ProductScreen = () => {
                             <strong>Category</strong>
                             <br />
                             {loading === true ? (
-                                <p>loading...</p>
+                                <Loader />
                             ) : (
                                 <div>
                                     {categories.map((category) => {
@@ -189,7 +189,9 @@ const ProductScreen = () => {
                     <div className="products-listing">
                         {filteredProducts.length === 0 ? (
                             loading === true ? (
-                                <p>loading...</p>
+                                <section className="center">
+                                    <Spinner />
+                                </section>
                             ) : (
                                 <div>
                                     <h3>ahhh, no products to show...</h3>

@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import { storeContext } from "../../utils/storeContext";
 import { Link } from "react-router-dom";
 
+import Loader from "../../components/Loading/Loading";
+
 import "./profile.css";
 
 const NoUserScreen = () => {
@@ -182,7 +184,9 @@ const ProfileScreen = () => {
                         <br />
                         <br />
                         {loading ? (
-                            <p>loading...</p>
+                            <section className="profile-flex">
+                                <Loader />
+                            </section>
                         ) : (
                             <Output
                                 choice={choice}

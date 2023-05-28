@@ -67,7 +67,11 @@ const Login = () => {
                         <br />
                         <br />
                         <p className="center">
-                            <code>{loading ? `logging in...` : message}</code>
+                            {loading ? (
+                                <code>Logging in...</code>
+                            ) : (
+                                <code>{message}</code>
+                            )}
                         </p>
                         <br />
                         <div className="center">

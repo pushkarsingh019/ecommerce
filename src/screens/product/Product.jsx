@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navigation/Navbar";
-import axios from "axios";
-import { backendUrl } from "../../utils/config";
 import { useState } from "react";
 import iphoneImage from "../../assets/iphoneImage.jpeg";
 import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
+import Spinner from "../../components/spinner/Spinner";
 
 import "./product.css";
 
@@ -32,7 +31,9 @@ const Product = () => {
         return (
             <section>
                 <Navbar />
-                <p className="center-form">loading...</p>
+                <div className="center-form">
+                    <Spinner />
+                </div>
             </section>
         );
     }
