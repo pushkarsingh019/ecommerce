@@ -1,6 +1,7 @@
 // importing layouts and components
 import Navbar from "../../components/navigation/Navbar";
 import CategoryCard from "../../components/categoryCard/CategoryCard";
+import Spinner from "../../components/spinner/Spinner";
 
 // importing css
 import "./home.css";
@@ -28,7 +29,9 @@ const HomeScreen = () => {
                 <h1>shop by category</h1>
                 <div className="categories-flex">
                     {loading ? (
-                        <p>loading...</p>
+                        <div className="center-form">
+                            <Spinner />
+                        </div>
                     ) : (
                         categories?.map((category) => {
                             return (

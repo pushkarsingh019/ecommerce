@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loading/Loading";
 
 // importing assets
 import showPassword from "../../assets/showPassword.svg";
@@ -20,11 +21,11 @@ const Signup = () => {
     });
     const navigate = useNavigate();
 
-    const onSignup = (event) => {
+    const onSignup = async (event) => {
         event.preventDefault();
         const passwordMatch = formData.password === confirmPassword;
         if (passwordMatch) {
-            signupUser(formData);
+            await signupUser(formData);
             setFormData({});
             setConfirmPassword("");
             if (loading === false) {
@@ -165,7 +166,7 @@ const Signup = () => {
                         <div className="center">
                             <small>
                                 {loading
-                                    ? "creating your account..."
+                                    ? `creating your account...`
                                     : errorMessage}
                             </small>
                         </div>

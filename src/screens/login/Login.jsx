@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loading/Loading";
 
 const Login = () => {
     const [formData, setFormData] = useState({});
@@ -67,7 +68,11 @@ const Login = () => {
                         <br />
                         <br />
                         <p className="center">
-                            <code>{loading ? `logging in...` : message}</code>
+                            {loading ? (
+                                <code>Logging in...</code>
+                            ) : (
+                                <code>{message}</code>
+                            )}
                         </p>
                         <br />
                         <div className="center">
