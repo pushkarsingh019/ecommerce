@@ -76,57 +76,82 @@ const Output = ({
     } else if (choice === 2) {
         return (
             <section className="profile-component">
-                <h4>Default Address</h4>
-                {user.address
-                    .filter((address) => address.default === true)
-                    .map((address) => {
-                        return (
-                            <div key={address.id} className="address-component">
-                                <p>Address : {address.address}</p>
-                                <p>Phone Number : {address.contactNumber}</p>
-                                <button
-                                    onClick={() => handleAddressUpdate(address)}
-                                >
-                                    Edit
-                                </button>
-                                <button onClick={() => onDelete(address.id)}>
-                                    Delete
-                                </button>
-                            </div>
-                        );
-                    })}
-                <br />
-                <br />
-                <h4>Other addresses</h4>
-                {user.address.filter((address) => address.default === false)
-                    .length !== 0
-                    ? user.address
-                          .filter((address) => address.default === false)
-                          .map((address) => {
-                              return (
-                                  <div
-                                      className="address-component"
-                                      key={address.id}
-                                  >
-                                      <p>Address : {address.address}</p>
-                                      <p>Phone Number : {address.number}</p>
-                                      <button
-                                          onClick={() =>
-                                              handleAddressUpdate(address)
-                                          }
-                                      >
-                                          Edit
-                                      </button>
-                                      <button
-                                          onClick={() => onDelete(address.id)}
-                                      >
-                                          Delete
-                                      </button>
-                                  </div>
-                              );
-                          })
-                    : "No aditional address, add one!"}
-
+                {user.address.length === 0 ? (
+                    <p>No address here, add one!</p>
+                ) : (
+                    <section>
+                        <h4>Default Address</h4>
+                        {user.address
+                            .filter((address) => address.default === true)
+                            .map((address) => {
+                                return (
+                                    <div
+                                        key={address.id}
+                                        className="address-component"
+                                    >
+                                        <p>Address : {address.address}</p>
+                                        <p>
+                                            Phone Number :{" "}
+                                            {address.contactNumber}
+                                        </p>
+                                        <button
+                                            onClick={() =>
+                                                handleAddressUpdate(address)
+                                            }
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() => onDelete(address.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        <br />
+                        <br />
+                        <h4>Other addresses</h4>
+                        {user.address.filter(
+                            (address) => address.default === false
+                        ).length !== 0
+                            ? user.address
+                                  .filter(
+                                      (address) => address.default === false
+                                  )
+                                  .map((address) => {
+                                      return (
+                                          <div
+                                              className="address-component"
+                                              key={address.id}
+                                          >
+                                              <p>Address : {address.address}</p>
+                                              <p>
+                                                  Phone Number :{" "}
+                                                  {address.contactNumber}
+                                              </p>
+                                              <button
+                                                  onClick={() =>
+                                                      handleAddressUpdate(
+                                                          address
+                                                      )
+                                                  }
+                                              >
+                                                  Edit
+                                              </button>
+                                              <button
+                                                  onClick={() =>
+                                                      onDelete(address.id)
+                                                  }
+                                              >
+                                                  Delete
+                                              </button>
+                                          </div>
+                                      );
+                                  })
+                            : "No aditional address, add one!"}
+                    </section>
+                )}
                 <br />
                 <br />
                 <br />
