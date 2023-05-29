@@ -109,7 +109,9 @@ const Output = ({
                                       key={address.id}
                                   >
                                       <p>Address : {address.address}</p>
-                                      <p>Phone Number : {address.number}</p>
+                                      <p>
+                                          Phone Number : {address.contactNumber}
+                                      </p>
                                       <button
                                           onClick={() =>
                                               handleAddressUpdate(address)
