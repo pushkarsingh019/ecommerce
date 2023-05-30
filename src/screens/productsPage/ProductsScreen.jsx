@@ -12,19 +12,33 @@ import "./products.css";
 
 const ProductScreen = () => {
     const { category } = useParams();
-    const { loading, fetchCategories, categories, products, fetchProducts } =
-        useContext(storeContext);
+    const {
+        loading,
+        fetchCategories,
+        categories,
+        products,
+        fetchProducts,
+        searchedProducts,
+        implementSearch,
+    } = useContext(storeContext);
     const [filteredProducts, setFilteredProducts] = useState(products);
     const [sortOrder, setSortOrder] = useState(); // 0 -- low to high, 1 - high to low
     const [selectedCategories, setSelectedCategories] = useState(
         category ? [category] : []
     );
     const [ratingFilter, setRatingFilter] = useState(3);
+    console.log("product screen -> ", searchedProducts);
 
     useEffect(() => {
         fetchProducts();
         fetchCategories();
+        // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        setFilteredProducts(searchedProducts);
+        // eslint-disable-next-line
+    }, [searchedProducts]);
 
     useEffect(() => {
         const filteredProducts = products.filter((product) => {
@@ -42,6 +56,7 @@ const ProductScreen = () => {
         if (selectedCategories.length === 0) {
             setFilteredProducts(products);
         }
+        // eslint-disable-next-line
     }, [selectedCategories]);
 
     useEffect(() => {
@@ -49,6 +64,7 @@ const ProductScreen = () => {
             sortOrder === 0 ? a.price - b.price : b.price - a.price
         );
         setFilteredProducts(sortedProducts);
+        // eslint-disable-next-line
     }, [sortOrder]);
 
     useEffect(() => {
@@ -71,6 +87,7 @@ const ProductScreen = () => {
         );
 
         setFilteredProducts(sortedProducts);
+        // eslint-disable-next-line
     }, [selectedCategories, ratingFilter, sortOrder, products]);
     const onSelectedCategoryChange = async (categoryName) => {
         const CategorySelected = selectedCategories.includes(categoryName);
@@ -94,10 +111,13 @@ const ProductScreen = () => {
         // 0 -> low to high, 1 -> high to low
         sortOrder === sortCode ? setSortOrder() : setSortOrder(sortCode);
     };
+    const handleSearch = (searchText) => {
+        implementSearch(searchText);
+    };
 
     return (
         <section>
-            <Navbar />
+            <Navbar onProductSearch={handleSearch} />
             <main className="screen">
                 <br />
                 <section className="products-screen">

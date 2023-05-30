@@ -12,14 +12,18 @@ import { storeContext } from "../../utils/storeContext";
 
 // external dependencies
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {
-    const { categories, loading, fetchCategories } = useContext(storeContext);
+    const { categories, loading, fetchCategories, implementSearch } =
+        useContext(storeContext);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCategories();
+        // eslint-disable-next-line
     }, []);
-
     return (
         <section>
             <Navbar />

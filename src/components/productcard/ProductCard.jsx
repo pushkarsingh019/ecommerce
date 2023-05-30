@@ -30,7 +30,7 @@ const ProductCard = ({
         } else {
             removeFromWishlist(product);
         }
-    }, [inWishlist, addToCart, removeFromWishlist]);
+    }, [inWishlist]);
 
     // useEffect(() => {
     //     setInWishlist(

@@ -25,6 +25,7 @@ export function CartProvider({children}){
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [product, setProduct] = useState();
+    const [searchedProducts, setSearchedProducts] = useState([]);
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -47,6 +48,11 @@ export function CartProvider({children}){
         categories,
         products,
         product,
+        searchedProducts,
+        implementSearch : (searchText) => {
+            setSearchedProducts(products.filter(product => product.name.toUpperCase().includes(searchText.toUpperCase()) || product.description.toUpperCase().includes(searchText.toUpperCase())));
+            console.log(searchedProducts);
+        },
         fetchCategories : async () => {
             setLoading(true)
             try {
