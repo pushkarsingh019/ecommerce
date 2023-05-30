@@ -30,7 +30,7 @@ const ProductCard = ({
         } else {
             removeFromWishlist(product);
         }
-    }, [inWishlist]);
+    }, [inWishlist, addToCart, removeFromWishlist]);
 
     // useEffect(() => {
     //     setInWishlist(
@@ -63,6 +63,7 @@ const ProductCard = ({
                     src={wishlistAdded}
                     alt="wishlist"
                     onClick={() => setInWishlist(false)}
+                    loading="lazy"
                 />
             ) : (
                 <img
@@ -70,6 +71,7 @@ const ProductCard = ({
                     src={wishlistOutline}
                     alt="wishlist"
                     onClick={() => setInWishlist(true)}
+                    loading="lazy"
                 />
             )}
             <div
@@ -81,6 +83,7 @@ const ProductCard = ({
                         src={iphoneImage}
                         alt="iphoneimage"
                         style={imageStyles}
+                        loading="lazy"
                     />
                 </div>
                 <br />
