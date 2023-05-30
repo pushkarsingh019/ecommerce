@@ -8,10 +8,21 @@ import { useNavigate } from "react-router-dom";
 import shoppingCart from "../../assets/shopping_cart.svg";
 import wishlistImage from "../../assets/wishlist.svg";
 import profileImage from "../../assets/profileImage.svg";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Navbar = () => {
-    const { cart, wishlist } = useContext(storeContext);
+    // onHomeSearch - handles the functionality when search is done on homescreen.
+    // onProductSearch  handles the functionality when the search is done on productScreen.
+    const { cart, wishlist, implementSearch } = useContext(storeContext);
     const navigate = useNavigate();
+    const [searchText, setSearchText] = useState("");
+
+    useEffect(() => {
+        implementSearch(searchText);
+        // eslint-disable-next-line
+    }, [searchText]);
+
     return (
         <nav className="navigation-bar">
             <div className="logo">
@@ -19,7 +30,17 @@ const Navbar = () => {
             </div>
             <div className="search">
                 <i class="material-icons">search</i>
-                <input type="text" placeholder="search" />
+                <input
+                    type="text"
+                    placeholder="search"
+                    onChange={(event) => setSearchText(event.target.value)}
+                    value={searchText}
+                    // onKeyPress={(e) => {
+                    //     if (e.key === "Enter") {
+
+                    //     }
+                    // }}
+                />
             </div>
             <div className="options">
                 <Link to={`/products`} className="explore-text">
