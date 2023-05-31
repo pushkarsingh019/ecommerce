@@ -21,6 +21,20 @@ const Login = () => {
             setMessage(response);
         }
     };
+
+    const handleTestLogin = async () => {
+        const response = await loginUser({
+            email: "gavin@hooli.com",
+            password: "killpiedpiper",
+        });
+        if (response === true) {
+            setFormData({});
+            navigate(`/profile`);
+        } else {
+            setMessage(response);
+        }
+    };
+
     return (
         <section>
             <Navbar />
@@ -41,6 +55,7 @@ const Login = () => {
                                 })
                             }
                             value={formData.email ? formData.email : ""}
+                            required
                         />
                         <br />
                         <br />
@@ -58,6 +73,7 @@ const Login = () => {
                                 })
                             }
                             value={formData.password ? formData.password : ""}
+                            required
                         />
                         <br />
                         <br />
