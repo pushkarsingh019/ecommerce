@@ -2,11 +2,13 @@ import Navbar from "../../components/navigation/Navbar";
 import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import CartCard from "../../components/cartProductCard/CartCard";
+import { useNavigate } from "react-router-dom";
 
 import "./cart.css";
 
 const CartScreen = () => {
     const { cart, clearCart } = useContext(storeContext);
+    const navigate = useNavigate();
     return (
         <section>
             <Navbar />
@@ -56,7 +58,12 @@ const CartScreen = () => {
                             )}
                         </p>
                         <br />
-                        <button className="button">checkout</button>
+                        <button
+                            className="button"
+                            onClick={() => navigate(`/checkout`)}
+                        >
+                            checkout
+                        </button>
                     </div>
                 </div>
             </main>

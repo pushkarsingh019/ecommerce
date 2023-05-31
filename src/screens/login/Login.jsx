@@ -16,7 +16,7 @@ const Login = () => {
         const response = await loginUser(formData);
         if (response === true) {
             setFormData({});
-            navigate(`/profile`);
+            navigate(-1);
         } else {
             setMessage(response);
         }

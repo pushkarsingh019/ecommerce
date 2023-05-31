@@ -77,3 +77,8 @@ button:focus {
 .blue {
   color: #1d4ed8;
 }
+
+/* checkout screen css */
+.steps {
+  color: red;
+}

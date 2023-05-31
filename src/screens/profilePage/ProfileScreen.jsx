@@ -8,7 +8,7 @@ import Loader from "../../components/Loading/Loading";
 
 import "./profile.css";
 
-const NoUserScreen = () => {
+export const NoUserScreen = () => {
     return (
         <section className="center-form">
             <p className="">
@@ -19,7 +19,6 @@ const NoUserScreen = () => {
                 <Link to={`/signup`}>
                     <strong>Signup</strong>
                 </Link>{" "}
-                to get started
             </p>
         </section>
     );
