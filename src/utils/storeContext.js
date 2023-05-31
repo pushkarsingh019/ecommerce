@@ -92,7 +92,8 @@ export function CartProvider({children}){
         addToCart : (product, quantity = 1) => {
             const exists = [...cart].find(item => item._id === product._id);
             if(exists){
-                notify("item already in cart")
+                setCart([...cart].map(item => item._id === product._id ? {...item, quantity : item.quantity + 1} : item));
+                notify("added to cart")
             }
             else{
                 setCart([...cart, {...product, quantity : Number(quantity)}]);
