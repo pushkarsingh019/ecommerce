@@ -8,7 +8,7 @@ import Loader from "../../components/Loading/Loading";
 
 import "./profile.css";
 
-const NoUserScreen = () => {
+export const NoUserScreen = () => {
     return (
         <section className="center-form">
             <p className="">
@@ -19,7 +19,6 @@ const NoUserScreen = () => {
                 <Link to={`/signup`}>
                     <strong>Signup</strong>
                 </Link>{" "}
-                to get started
             </p>
         </section>
     );
@@ -216,7 +215,20 @@ const Output = ({
             </section>
         );
     } else if (choice === 3) {
-        return <section className="profile-component">order history</section>;
+        return (
+            <section className="profile-component">
+                <h2>Order History</h2>
+                {user.orders.length === 0 ? (
+                    <p>no orders yet</p>
+                ) : (
+                    <div>
+                        {user.orders.map((order) => {
+                            return <p>{order._id}</p>;
+                        })}
+                    </div>
+                )}
+            </section>
+        );
     } else {
         return <p>something went wrong !</p>;
     }

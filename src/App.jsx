@@ -10,6 +10,7 @@ import Signup from "./screens/signup/Signup";
 import Login from "./screens/login/Login";
 
 import "react-toastify/dist/ReactToastify.css";
+import CheckoutScreen from "./screens/checkout/CheckoutScreen";
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                 <Route path="/product/:productId" element={<Product />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/checkout" element={<CheckoutScreen />} />
                 <Route path="*" element={<h3>someting is wrong</h3>} />
             </Routes>
         </BrowserRouter>

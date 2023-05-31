@@ -1,0 +1,30 @@
+.steps {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+}
+
+.steps .step small {
+    font-size: 15px;
+    color: #4b5563;
+}
+
+.steps .step small:hover{
+    cursor: pointer;
+}
+
+.bold {
+    color: black;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.bold:hover{
+    cursor: pointer;
+}
+
+.show-address {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+}
