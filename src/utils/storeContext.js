@@ -204,6 +204,26 @@ export function CartProvider({children}){
                 alert(`${error.message}`)
                 setLoading(false)
             }
+        },
+        createNewOrder : async (shippingAddress) => {
+            const orderData = {
+                products : cart,
+                shippingAddress : shippingAddress,
+                totalCost : cart.reduce((totalCost, currentItem) => totalCost + currentItem.price * currentItem.quantity, 0),
+            }
+            setLoading(true)
+            try {
+                const {data} = await axios.post(`${backendUrl}/api/order`, orderData, {
+                    headers : {
+                        authorization : accessToken
+                    }
+                });
+                setUser(data);
+                setCart([]);
+                setLoading(false)
+            } catch (error) {
+                console.log(error.message)
+            }
         }
     };
 

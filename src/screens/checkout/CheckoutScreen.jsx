@@ -9,12 +9,14 @@ import AddressCard from "../../components/addressCard/AddressCard";
 import { NoUserScreen } from "../profilePage/ProfileScreen";
 import { useNavigate } from "react-router-dom";
 
-const CheckoutSteps = ({ step, user, updateStep }) => {
+const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
     const { cart, logout, newAddress } = useContext(storeContext);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(
-        user.address.length > 0
-            ? user.address.find((address) => address.default === true)
+        user.address
+            ? user.address.length > 0
+                ? user.address.find((address) => address.default === true)
+                : {}
             : {}
     );
     const [addressData, setAddressData] = useState({ default: false });
@@ -242,7 +244,7 @@ const CheckoutSteps = ({ step, user, updateStep }) => {
                                 <p>Shipping</p>
                                 <p>₹ 0</p>
                             </div>
-                            <div className="flex">
+                            {/* <div className="flex">
                                 <p>Tax</p>
                                 <p>
                                     ₹{" "}
@@ -254,7 +256,7 @@ const CheckoutSteps = ({ step, user, updateStep }) => {
                                         0
                                     ) * 0.08}
                                 </p>
-                            </div>
+                            </div> */}
                             <div className="flex">
                                 <p>Total</p>
                                 <p>
@@ -280,7 +282,21 @@ const CheckoutSteps = ({ step, user, updateStep }) => {
                             </div>
                         </div>
                     </div>
-                    <button onClick={() => updateStep(4)}>next</button>
+                    <br />
+                    <br />
+                    <div className="flex">
+                        <div></div>
+                        <button
+                            style={{ width: "25%" }}
+                            className="cta"
+                            onClick={() => {
+                                onNewOrder(selectedAddress);
+                                updateStep(4);
+                            }}
+                        >
+                            proceed to payment
+                        </button>
+                    </div>
                 </section>
             );
         case 4:
@@ -295,7 +311,8 @@ const CheckoutSteps = ({ step, user, updateStep }) => {
                         </p>
                         <p className="go-back"></p>
                     </div>
-                    <h2>payment integration</h2>
+                    <h2>Order Confirmation</h2>
+                    <p>Order confirmed, go to your profile to see your order</p>
                 </section>
             );
         default:
@@ -305,8 +322,9 @@ const CheckoutSteps = ({ step, user, updateStep }) => {
 
 const CheckoutScreen = () => {
     const [step, setStep] = useState(1);
-    const { user } = useContext(storeContext);
+    const { user, createNewOrder } = useContext(storeContext);
     const handleStepChange = (step) => setStep(step);
+    const handleNewOrder = (shippingAddress) => createNewOrder(shippingAddress);
     return (
         <section>
             <Navbar />
@@ -314,35 +332,24 @@ const CheckoutScreen = () => {
                 <h1>Checkout</h1>
                 <br />
                 <div className="steps center">
-                    <p
-                        className={step >= 1 ? "bold" : "step"}
-                        // onClick={() => setStep(1)}
-                    >
+                    <p className={step >= 1 ? "bold" : "step"}>
                         <small>Login</small>
                     </p>
-                    <p
-                        className={step >= 2 ? "bold" : "step"}
-                        // onClick={() => setStep(2)}
-                    >
+                    <p className={step >= 2 ? "bold" : "step"}>
                         <small>Shipping</small>
                     </p>
-                    <p
-                        className={step >= 3 ? "bold" : "step"}
-                        // onClick={() => setStep(3)}
-                    >
+                    <p className={step >= 3 ? "bold" : "step"}>
                         <small>Summary</small>
                     </p>
-                    <p
-                        className={step >= 4 ? "bold" : "step"}
-                        // onClick={() => setStep(4)}
-                    >
-                        <small>Payment</small>
+                    <p className={step >= 4 ? "bold" : "step"}>
+                        <small>Confirmation</small>
                     </p>
                 </div>
                 <CheckoutSteps
                     step={step}
                     user={user}
                     updateStep={handleStepChange}
+                    onNewOrder={handleNewOrder}
                 />
             </main>
         </section>

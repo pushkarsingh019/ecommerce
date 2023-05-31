@@ -215,7 +215,20 @@ const Output = ({
             </section>
         );
     } else if (choice === 3) {
-        return <section className="profile-component">order history</section>;
+        return (
+            <section className="profile-component">
+                <h2>Order History</h2>
+                {user.orders.length === 0 ? (
+                    <p>no orders yet</p>
+                ) : (
+                    <div>
+                        {user.orders.map((order) => {
+                            return <p>{order._id}</p>;
+                        })}
+                    </div>
+                )}
+            </section>
+        );
     } else {
         return <p>something went wrong !</p>;
     }
