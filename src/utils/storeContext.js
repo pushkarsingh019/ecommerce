@@ -165,6 +165,7 @@ export function CartProvider({children}){
             setAccessToken("")
         },
         newAddress : async (addressData) => {
+            console.log(addressData)
             setLoading(true)
             try {
                 const {data} = await axios.post(`${backendUrl}/api/user/address`, {userId : user._id, addressDetails : addressData});
