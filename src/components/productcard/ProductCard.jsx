@@ -30,20 +30,10 @@ const ProductCard = ({
     console.log(cart.filter((item) => item._id === id));
 
     useEffect(() => {
-        if (inWishlist) {
-            addToWishlist(product);
-        } else {
-            removeFromWishlist(product);
-        }
-    }, [inWishlist]);
-
-    // useEffect(() => {
-    //     setInWishlist(
-    //         wishlist.find((item) => item === product) !== undefined
-    //             ? true
-    //             : false
-    //     );
-    // }, [wishlist]);
+        setInCart(
+            cart.filter((item) => item._id === id).length > 0 ? true : false
+        );
+    }, [cart]);
 
     const imageContainerStyles = {
         height: 0,
@@ -67,7 +57,10 @@ const ProductCard = ({
                     className="wishlist"
                     src={wishlistAdded}
                     alt="wishlist"
-                    onClick={() => setInWishlist(false)}
+                    onClick={() => {
+                        setInWishlist(false);
+                        removeFromWishlist(product);
+                    }}
                     loading="lazy"
                 />
             ) : (
@@ -75,7 +68,10 @@ const ProductCard = ({
                     className="wishlist"
                     src={wishlistOutline}
                     alt="wishlist"
-                    onClick={() => setInWishlist(true)}
+                    onClick={() => {
+                        setInWishlist(true);
+                        addToWishlist(product);
+                    }}
                     loading="lazy"
                 />
             )}
@@ -103,8 +99,17 @@ const ProductCard = ({
                 </div>
                 <br />
             </div>
-            <button onClick={() => addToCart(product)}>
-                {inCart ? "In Cart" : "Add To Cart"}
+            <button
+                onClick={() => {
+                    if (inCart) {
+                        navigate(`/cart`);
+                    } else {
+                        addToCart(product);
+                    }
+                }}
+                className={inCart ? "button disabled" : "cta"}
+            >
+                {inCart ? "Go To Cart" : "Add To Cart"}
             </button>
         </div>
     );
