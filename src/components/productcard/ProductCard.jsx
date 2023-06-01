@@ -20,9 +20,14 @@ const ProductCard = ({
     const navigate = useNavigate();
     const { addToCart, addToWishlist, wishlist, cart, removeFromWishlist } =
         useContext(storeContext);
-    const [inWishlist, setInWishlist] = useState(() =>
-        wishlist.find((item) => item === product) !== undefined ? true : false
+    const [inCart, setInCart] = useState(
+        cart.filter((item) => item._id === id).length > 0 ? true : false
     );
+    const [inWishlist, setInWishlist] = useState(
+        wishlist.filter((item) => item._id === id).length > 0 ? true : false
+    );
+
+    console.log(cart.filter((item) => item._id === id));
 
     useEffect(() => {
         if (inWishlist) {
@@ -99,7 +104,7 @@ const ProductCard = ({
                 <br />
             </div>
             <button onClick={() => addToCart(product)}>
-                {cart.includes(product) ? "In Cart" : "Add To Cart"}
+                {inCart ? "In Cart" : "Add To Cart"}
             </button>
         </div>
     );
