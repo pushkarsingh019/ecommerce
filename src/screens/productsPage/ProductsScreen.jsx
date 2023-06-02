@@ -5,6 +5,7 @@ import { useState } from "react";
 import ProductCard from "../../components/productcard/ProductCard";
 import Loader from "../../components/Loading/Loading";
 import Spinner from "../../components/spinner/Spinner";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { storeContext } from "../../utils/storeContext";
 
@@ -12,6 +13,7 @@ import "./products.css";
 
 const ProductScreen = () => {
     const { category } = useParams();
+    const [parent] = useAutoAnimate();
     const {
         loading,
         fetchCategories,
@@ -206,7 +208,7 @@ const ProductScreen = () => {
                             <span> 5</span>
                         </div>
                     </div>
-                    <div className="products-listing">
+                    <div className="products-listing" ref={parent}>
                         {filteredProducts.length === 0 ? (
                             loading === true ? (
                                 <section className="center">

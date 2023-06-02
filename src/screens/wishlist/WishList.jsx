@@ -2,9 +2,11 @@ import Navbar from "../../components/navigation/Navbar";
 import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import WishlistCard from "../../components/wishlistCard/WishlistCard";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const WishList = () => {
     const { wishlist, clearWishlist } = useContext(storeContext);
+    const [parent] = useAutoAnimate();
     return (
         <section>
             <Navbar />
@@ -12,7 +14,7 @@ const WishList = () => {
                 <h2>Shopping Wishlist ({wishlist.length} items)</h2>
                 <br />
                 <br />
-                <div className="wishlist-items">
+                <div className="wishlist-items" ref={parent}>
                     {wishlist.length > 0 ? (
                         wishlist.map((item) => {
                             return (

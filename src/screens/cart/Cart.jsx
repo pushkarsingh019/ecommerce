@@ -3,11 +3,13 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import CartCard from "../../components/cartProductCard/CartCard";
 import { useNavigate } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import "./cart.css";
 
 const CartScreen = () => {
     const { cart, clearCart } = useContext(storeContext);
+    const [parent] = useAutoAnimate();
     const navigate = useNavigate();
     return (
         <section>
@@ -22,7 +24,7 @@ const CartScreen = () => {
                         {cart.length === 0 ? (
                             <p>no products in cart</p>
                         ) : (
-                            <div>
+                            <div ref={parent}>
                                 {cart.map((product) => {
                                     return (
                                         <CartCard
