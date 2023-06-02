@@ -3,6 +3,7 @@ import Navbar from "../../components/navigation/Navbar";
 import { useContext, useState } from "react";
 import { storeContext } from "../../utils/storeContext";
 import { Link } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import Loader from "../../components/Loading/Loading";
 
@@ -34,6 +35,7 @@ const Output = ({
 }) => {
     const [formData, setFormData] = useState({ default: false });
     const [isEditing, setIsEditing] = useState(false);
+    const [parent] = useAutoAnimate();
 
     const handleAddress = (event) => {
         event.preventDefault();
@@ -80,34 +82,38 @@ const Output = ({
                 ) : (
                     <section>
                         <h4>Default Address</h4>
-                        {user.address
-                            .filter((address) => address.default === true)
-                            .map((address) => {
-                                return (
-                                    <div
-                                        key={address.id}
-                                        className="address-component"
-                                    >
-                                        <p>Address : {address.address}</p>
-                                        <p>
-                                            Phone Number :{" "}
-                                            {address.contactNumber}
-                                        </p>
-                                        <button
-                                            onClick={() =>
-                                                handleAddressUpdate(address)
-                                            }
+                        <div ref={parent}>
+                            {user.address
+                                .filter((address) => address.default === true)
+                                .map((address) => {
+                                    return (
+                                        <div
+                                            key={address.id}
+                                            className="address-component"
                                         >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => onDelete(address.id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                );
-                            })}
+                                            <p>Address : {address.address}</p>
+                                            <p>
+                                                Phone Number :{" "}
+                                                {address.contactNumber}
+                                            </p>
+                                            <button
+                                                onClick={() =>
+                                                    handleAddressUpdate(address)
+                                                }
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    onDelete(address.id)
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    );
+                                })}
+                        </div>
                         <br />
                         <br />
                         <h4>Other addresses</h4>
