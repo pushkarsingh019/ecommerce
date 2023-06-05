@@ -75,42 +75,38 @@ const ProductCard = ({
                     loading="lazy"
                 />
             )}
-            <div
-                onClick={() => navigate(`/product/${id}`)}
-                className="inner-product-div"
-            >
-                <div style={imageContainerStyles}>
+            <div className="inner-product-div">
+                <div className="image-container">
                     <img
-                        src={iphoneImage}
-                        alt="iphoneimage"
-                        style={imageStyles}
-                        loading="lazy"
+                        src={image ? image : ""}
+                        alt={name}
+                        className="product-img"
+                        onClick={() => navigate(`/product/${id}`)}
                     />
                 </div>
                 <br />
-                <br />
-                <h3>{name}</h3>
-                <br />
-                <p>{description}</p>
-                <br />
-                <div className="flex">
-                    <p>{rating}</p>
-                    <p>₹{price}</p>
+                <div className="info">
+                    <h3 onClick={() => navigate(`/product/${id}`)}>{name}</h3>
+                    <br />
+                    <div className="flex">
+                        <p>{rating}</p>
+                        <p>₹{price}</p>
+                    </div>
+                    <br />
                 </div>
-                <br />
+                <button
+                    onClick={() => {
+                        if (inCart) {
+                            navigate(`/cart`);
+                        } else {
+                            addToCart(product);
+                        }
+                    }}
+                    className={inCart ? "button disabled" : "cta"}
+                >
+                    {inCart ? "Go To Cart" : "Add To Cart"}
+                </button>
             </div>
-            <button
-                onClick={() => {
-                    if (inCart) {
-                        navigate(`/cart`);
-                    } else {
-                        addToCart(product);
-                    }
-                }}
-                className={inCart ? "button disabled" : "cta"}
-            >
-                {inCart ? "Go To Cart" : "Add To Cart"}
-            </button>
         </div>
     );
 };
