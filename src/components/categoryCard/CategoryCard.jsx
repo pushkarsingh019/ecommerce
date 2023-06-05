@@ -14,9 +14,11 @@ const CategoryCard = ({ name, description, image }) => {
             onClick={() => handleCategorySelection(name)}
         >
             {/* <div className="image"></div> */}
-            <h3>{name}</h3>
+            <img src={image} className="img" alt={name} loading="lazy" />
             <br />
-            <p>{description}</p>
+            <br />
+            <h3>{name}</h3>
+            {/* <p>{description}</p> */}
         </div>
     );
 };

@@ -1,9 +1,22 @@
 .category-card {
-    padding: 30px;
-    background-color: #e5e7eb;
+    padding: 30px 15px;
+    background-color: #ffffff;
     border-radius: 8px;
+    text-align: center;
 }
 
 .category-card:hover {
     cursor: pointer;
 }
+
+.img {
+    width: 250px;
+    height: 160px;
+    object-fit: contain;
+    transition: ease-in 0.3s;
+}
+
+.img:hover {
+    transform: scale(1.1);
+}
+

@@ -25,7 +25,7 @@ const HomeScreen = () => {
         // eslint-disable-next-line
     }, []);
     return (
-        <section>
+        <section className="home-screen">
             <Navbar />
             <main className="screen">
                 <h1>shop by category</h1>
@@ -41,6 +41,7 @@ const HomeScreen = () => {
                                     key={category._id}
                                     name={category.categoryName}
                                     description={category.description}
+                                    image={category.image}
                                 />
                             );
                         })
