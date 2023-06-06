@@ -35,3 +35,16 @@
 .go-back:hover{
     cursor: pointer;
 }
+
+.product-page-img {
+    height: 450px;
+    object-fit: contain;
+}
+
+@media (max-width : 800px){
+    .product-page-img{
+        height: auto;
+        width: 80vw;
+        object-fit: contain;
+    }
+}
