@@ -27,7 +27,7 @@ const HomeScreen = () => {
     return (
         <section className="home-screen">
             <Navbar />
-            <main className="screen">
+            <main className="screen home-screen">
                 <h1>shop by category</h1>
                 <div className="categories-flex">
                     {loading ? (

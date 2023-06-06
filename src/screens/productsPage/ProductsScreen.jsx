@@ -120,7 +120,7 @@ const ProductScreen = () => {
     return (
         <section>
             <Navbar onProductSearch={handleSearch} />
-            <main className="screen">
+            <main className="screen products-screen">
                 <br />
                 <section className="products-screen">
                     <h3 style={{ marginLeft: "15rem" }}>

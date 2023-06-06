@@ -19,6 +19,7 @@
 
 .product-card h3:hover {
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .image-container {
@@ -31,10 +32,11 @@
     height: 150px;
     width: 200px;
     object-fit: contain;
+    transition: 0.3s ease-in-out;
 }
 
 .product-img:hover{
-    transform: scale(1.1);
+    transform: scale(1.050);
     cursor: pointer;
 }
 
