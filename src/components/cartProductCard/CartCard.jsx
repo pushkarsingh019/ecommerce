@@ -23,15 +23,11 @@ const CartCard = ({ name, image, price, quantity, product }) => {
 
     return (
         <div className="cart-card">
-            <img src={iphoneImage} alt={name} style={imageStyles} />
+            <img src={image} alt={name} style={imageStyles} />
             <div className="product-details">
-                <div className="flex">
-                    <h3 className="product-name">{name}</h3>
-                    <p>
-                        <strong>₹{price}</strong>
-                    </p>
-                </div>
+                <h4>{name}</h4>
                 <br />
+                <p>₹{price}</p>
                 <br />
                 <div className="quantiy">
                     <label>Qty : </label>
@@ -47,8 +43,6 @@ const CartCard = ({ name, image, price, quantity, product }) => {
                     </select>
                 </div>
                 <br />
-                <br />
-                <br />
                 <div className="flex">
                     <button
                         className="button"
@@ -62,12 +56,8 @@ const CartCard = ({ name, image, price, quantity, product }) => {
                     >
                         remove from cart
                     </button>
-                    <p className="button">share</p>
                 </div>
             </div>
-            <br />
-            <br />
-            <br />
         </div>
     );
 };

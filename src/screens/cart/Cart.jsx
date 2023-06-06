@@ -14,8 +14,8 @@ const CartScreen = () => {
     return (
         <section>
             <Navbar />
-            <main className="screen">
-                <h2>my shopping cart ({cart.length} products)</h2>
+            <main className="screen screen-cart">
+                <h2 className="center">my cart ({cart.length} products)</h2>
                 <br />
                 <br />
 
@@ -33,6 +33,7 @@ const CartScreen = () => {
                                             price={product.price}
                                             quantity={product.quantity}
                                             product={product}
+                                            image={product.image}
                                         />
                                     );
                                 })}
@@ -40,36 +41,73 @@ const CartScreen = () => {
                         )}
                     </div>
                     <div className="summary">
-                        <h3>
-                            Subtotal (
-                            {cart.reduce(
-                                (totalItems, currentItem) =>
-                                    totalItems + currentItem.quantity,
-                                0
-                            )}{" "}
-                            items)
-                        </h3>
+                        <h4>Price Details</h4>
+                        <hr />
                         <br />
+                        <div className="flex">
+                            <span>
+                                Price(
+                                {cart.reduce(
+                                    (totalItems, currentItem) =>
+                                        totalItems + currentItem.quantity,
+                                    0
+                                )}{" "}
+                                items)
+                            </span>
+                            <span>
+                                <strong>
+                                    ₹
+                                    {cart.reduce(
+                                        (totalCost, currentItem) =>
+                                            totalCost +
+                                            currentItem.price *
+                                                currentItem.quantity,
+                                        0
+                                    )}
+                                </strong>
+                            </span>
+                        </div>
+                        <div className="flex">
+                            <span>Discount</span>
+                            <span>
+                                <strong>₹ 0</strong>
+                            </span>
+                        </div>
+                        <div className="flex">
+                            <span>Delivery Charges</span>
+                            <span>
+                                <strong>₹ 0</strong>
+                            </span>
+                        </div>
+                        <hr />
+                        <div className="flex">
+                            <span>Total Amount</span>
+                            <span>
+                                <strong>
+                                    ₹
+                                    {cart.reduce(
+                                        (totalCost, currentItem) =>
+                                            totalCost +
+                                            currentItem.price *
+                                                currentItem.quantity,
+                                        0
+                                    )}
+                                </strong>
+                            </span>
+                        </div>
+                        <hr />
                         <p>
-                            Total cost : ₹
-                            {cart.reduce(
-                                (totalCost, currentItem) =>
-                                    totalCost +
-                                    currentItem.price * currentItem.quantity,
-                                0
-                            )}
+                            <small>No delivery charge for this order!</small>
                         </p>
-                        <br />
                         <button
-                            className="button"
                             onClick={() => navigate(`/checkout`)}
+                            className="cta"
                         >
-                            checkout
+                            place order
                         </button>
                     </div>
                 </div>
             </main>
-            <button onClick={() => clearCart()}>clear cart</button>
         </section>
     );
 };
