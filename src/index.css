@@ -117,6 +117,12 @@ form input {
   width: 500px;
 }
 
+.nothing {
+  width: 300px;
+  height: auto;
+  object-fit: contain;
+}
+
 @media (max-width : 600px) {
   .width-300 {
     width: 100%;

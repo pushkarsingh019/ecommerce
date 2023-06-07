@@ -3,12 +3,15 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import WishlistCard from "../../components/wishlistCard/WishlistCard";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useNavigate } from "react-router-dom";
 
 import "./wishlist.css";
+import nothing from "../../assets/nothing.svg";
 
 const WishList = () => {
     const { wishlist, clearWishlist } = useContext(storeContext);
     const [parent] = useAutoAnimate();
+    const navigate = useNavigate();
     return (
         <section>
             <Navbar />
@@ -30,7 +33,23 @@ const WishList = () => {
                             );
                         })
                     ) : (
-                        <p>there is nothing here</p>
+                        <div>
+                            <p>
+                                there is nothing here.{" "}
+                                <span
+                                    className="blue"
+                                    onClick={() => navigate(`/products`)}
+                                >
+                                    continue shopping
+                                </span>
+                            </p>
+                            <br />
+                            <img
+                                src={nothing}
+                                alt="no products in wishlist"
+                                className="nothing"
+                            />
+                        </div>
                     )}
                 </div>
             </main>

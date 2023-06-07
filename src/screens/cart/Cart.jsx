@@ -4,6 +4,7 @@ import { storeContext } from "../../utils/storeContext";
 import CartCard from "../../components/cartProductCard/CartCard";
 import { useNavigate } from "react-router-dom";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import nothing from "../../assets/nothing.svg";
 
 import "./cart.css";
 
@@ -22,7 +23,24 @@ const CartScreen = () => {
                 <div className="cart-screen">
                     <div>
                         {cart.length === 0 ? (
-                            <p>no products in cart</p>
+                            <div>
+                                <p>
+                                    no products in cart,{" "}
+                                    <span
+                                        className="underline blue"
+                                        onClick={() => navigate(`/products`)}
+                                    >
+                                        continue shopping
+                                    </span>
+                                </p>
+                                <br />
+                                <img
+                                    src={nothing}
+                                    alt="no products in cart"
+                                    className="nothing"
+                                    loading="lazy"
+                                />
+                            </div>
                         ) : (
                             <div ref={parent}>
                                 {cart.map((product) => {
@@ -102,7 +120,8 @@ const CartScreen = () => {
                         </p>
                         <button
                             onClick={() => navigate(`/checkout`)}
-                            className="cta"
+                            className={cart.length === 0 ? "disabled" : "cta"}
+                            disabled={cart.length === 0 ? true : false}
                         >
                             place order
                         </button>
