@@ -14,7 +14,7 @@ import { useEffect } from "react";
 const Navbar = () => {
     // onHomeSearch - handles the functionality when search is done on homescreen.
     // onProductSearch  handles the functionality when the search is done on productScreen.
-    const { cart, wishlist, implementSearch } = useContext(storeContext);
+    const { cart, wishlist, implementSearch, user } = useContext(storeContext);
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState("");
 
@@ -28,7 +28,7 @@ const Navbar = () => {
             <div className="logo">
                 <Link to="/">the shopping site</Link>
             </div>
-            <div className="search">
+            <div className="search" onClick={() => navigate(`/products`)}>
                 <i class="material-icons">search</i>
                 <input
                     type="text"
@@ -46,9 +46,6 @@ const Navbar = () => {
                 <Link to={`/products`} className="explore-text">
                     Explore
                 </Link>
-                <div className="link" onClick={() => navigate(`/profile`)}>
-                    <img src={profileImage} alt="profile" />
-                </div>
                 <div className="link" onClick={() => navigate(`/wishlist`)}>
                     <img src={wishlistImage} alt="wishlist" />
                     <span className="notification">{wishlist.length}</span>
@@ -56,6 +53,23 @@ const Navbar = () => {
                 <div className="link" onClick={() => navigate(`/cart`)}>
                     <img src={shoppingCart} alt="cart" />
                     <span className="notification">{cart.length}</span>
+                </div>
+                <div
+                    className="link profile-link"
+                    onClick={() => navigate(`/profile`)}
+                >
+                    {Object.keys(user).length === 0 ? (
+                        <p>Login</p>
+                    ) : (
+                        <div className="flex">
+                            <img
+                                style={{ marginRight: "3px" }}
+                                src={profileImage}
+                                alt="profile"
+                            />{" "}
+                            <span>{user.name}</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
