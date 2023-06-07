@@ -34,6 +34,7 @@ const CartScreen = () => {
                                             quantity={product.quantity}
                                             product={product}
                                             image={product.image}
+                                            showCTA={true}
                                         />
                                     );
                                 })}

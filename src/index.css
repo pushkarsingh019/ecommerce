@@ -20,6 +20,12 @@ button:focus {
   /* background-color: #d1d5db; */
 }
 
+@media (max-width : 500px){
+  .screen {
+    padding: 30px 20px;
+  }
+}
+
 .image {
   height: 150px;
   width: 220px;

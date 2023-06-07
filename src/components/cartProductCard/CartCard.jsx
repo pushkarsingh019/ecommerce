@@ -5,7 +5,7 @@ import iphoneImage from "../../assets/iphoneImage.jpeg";
 import "./cartCard.css";
 import { useEffect } from "react";
 
-const CartCard = ({ name, image, price, quantity, product }) => {
+const CartCard = ({ name, image, price, quantity, product, showCTA }) => {
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const [cartQuantity, setCartQuantity] = useState(quantity);
     const { moveToWishlist, removeFromCart, updateQuantity } =
@@ -43,20 +43,24 @@ const CartCard = ({ name, image, price, quantity, product }) => {
                     </select>
                 </div>
                 <br />
-                <div className="flex">
-                    <button
-                        className="button"
-                        onClick={() => moveToWishlist(product)}
-                    >
-                        move to wishlist
-                    </button>
-                    <button
-                        className="button"
-                        onClick={() => removeFromCart(product)}
-                    >
-                        remove from cart
-                    </button>
-                </div>
+                {showCTA ? (
+                    <div className="flex">
+                        <button
+                            className="button"
+                            onClick={() => moveToWishlist(product)}
+                        >
+                            move to wishlist
+                        </button>
+                        <button
+                            className="button"
+                            onClick={() => removeFromCart(product)}
+                        >
+                            remove from cart
+                        </button>
+                    </div>
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     );

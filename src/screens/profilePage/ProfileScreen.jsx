@@ -196,6 +196,7 @@ const Output = ({
                                     handleAddressDelete={onDelete}
                                     handleAddressUpdate={updateAddress}
                                     addressObject={address}
+                                    usecase={"profile"}
                                 />
                             );
                         })}
