@@ -4,6 +4,16 @@
     justify-content: center;
 }
 
+.steps small {
+    background-color: aqua;
+    width: ;
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    color: transparent;
+    width: 3rem;
+}
+
 .steps .step small {
     font-size: 15px;
     color: #4b5563;
@@ -13,11 +23,11 @@
     cursor: pointer;
 }
 
-.bold {
+/* .bold {
     color: black;
     font-size: 15px;
     font-weight: 700;
-}
+} */
 
 .bold:hover{
     cursor: pointer;

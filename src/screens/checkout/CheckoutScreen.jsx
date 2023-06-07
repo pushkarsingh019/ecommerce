@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-
 import Navbar from "../../components/navigation/Navbar";
 import "./checkout.css";
 import { storeContext } from "../../utils/storeContext";

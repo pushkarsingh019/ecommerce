@@ -120,15 +120,14 @@ const ProductScreen = () => {
     return (
         <section>
             <Navbar onProductSearch={handleSearch} />
-            <main className="screen products-screen">
+            <main className="screen">
                 <br />
                 <section className="products-screen">
-                    <h3 style={{ marginLeft: "15rem" }}>
+                    <h2>
                         {selectedCategories.length !== 0
                             ? `Showing results for ${selectedCategories} (${filteredProducts.length} products)`
                             : `Showing all products (${filteredProducts.length} products)`}
-                    </h3>
-                    <br />
+                    </h2>
                     <div className="sidebar">
                         <div className="flex">
                             <h4>Filters</h4>
