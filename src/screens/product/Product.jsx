@@ -18,11 +18,6 @@ const Product = () => {
     const { addToCart, addToWishlist, product, fetchProductDetails, loading } =
         useContext(storeContext);
 
-    const imageStyles = {
-        height: "450px",
-        width: "400px",
-    };
-
     useEffect(() => {
         fetchProductDetails(productId);
     }, []);
@@ -51,11 +46,12 @@ const Product = () => {
                 </span>
                 <br />
                 <br />
+                <br />
                 <div className="product-page">
                     <div className="product-image-section">
                         <img
-                            style={imageStyles}
-                            src={iphoneImage}
+                            className="product-page-img"
+                            src={product.image}
                             alt={product.name}
                         />
                     </div>

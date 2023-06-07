@@ -1,6 +1,8 @@
 .cart-screen {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: start;
     column-gap: 3rem;
     /* display: flex;
     justify-content: space-between; */
@@ -8,6 +10,32 @@
 }
 
 .summary {
-    padding: 10px 15px;
-    text-align: center;
+    padding: 10px 20px;
+    text-align: left;
+    background-color: white;
+    width: 400px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+}
+
+.summary * {
+    margin-bottom: 0.5rem;
+}
+
+.screen-cart {
+    background-color: #F0F0F0;
+}
+
+@media (max-width : 1000px){
+    .cart-screen {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 2rem;
+    }
+}
+
+@media(max-width : 550px){
+    .summary {
+        width: 300px;
+    }
 }

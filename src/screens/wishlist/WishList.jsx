@@ -3,10 +3,15 @@ import { useContext } from "react";
 import { storeContext } from "../../utils/storeContext";
 import WishlistCard from "../../components/wishlistCard/WishlistCard";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useNavigate } from "react-router-dom";
+
+import "./wishlist.css";
+import nothing from "../../assets/nothing.svg";
 
 const WishList = () => {
     const { wishlist, clearWishlist } = useContext(storeContext);
     const [parent] = useAutoAnimate();
+    const navigate = useNavigate();
     return (
         <section>
             <Navbar />
@@ -14,7 +19,7 @@ const WishList = () => {
                 <h2>Shopping Wishlist ({wishlist.length} items)</h2>
                 <br />
                 <br />
-                <div className="wishlist-items" ref={parent}>
+                <div className="wishlist-grid" ref={parent}>
                     {wishlist.length > 0 ? (
                         wishlist.map((item) => {
                             return (
@@ -23,15 +28,31 @@ const WishList = () => {
                                     name={item.name}
                                     price={item.price}
                                     product={item}
+                                    image={item.image}
                                 />
                             );
                         })
                     ) : (
-                        <p>there is nothing here</p>
+                        <div>
+                            <p>
+                                there is nothing here.{" "}
+                                <span
+                                    className="blue"
+                                    onClick={() => navigate(`/products`)}
+                                >
+                                    continue shopping
+                                </span>
+                            </p>
+                            <br />
+                            <img
+                                src={nothing}
+                                alt="no products in wishlist"
+                                className="nothing"
+                            />
+                        </div>
                     )}
                 </div>
             </main>
-            <button onClick={() => clearWishlist()}>Clear Wishlist</button>
         </section>
     );
 };

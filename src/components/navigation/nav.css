@@ -3,6 +3,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 25px 40px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+    background-color: white;
+    /* flex-wrap: wrap; */
 }
 
 .logo {
@@ -13,7 +18,7 @@
     padding: 5px 16px;
     border: solid 2px black;
     font-size: 16px;
-    width: 30vw;
+    width: 20vw;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -29,7 +34,7 @@
 .options {
     display: flex;
     justify-content: space-between;
-    width: 20vw;
+    width: 25vw;
     align-items: center;
 }
 
@@ -53,3 +58,36 @@
 .link {
     position: relative;
 }
+
+.profile-link {
+    background-color: #e5e7eb;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 8px;
+}
+
+@media (max-width : 900px) {
+    .options {
+        width: 40vw;
+    }
+}
+
+@media (max-width : 600px){
+    .search {
+        /* display: none; */
+        width: 80%;
+    }
+
+    .navigation-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+    }
+
+    .options {
+        width: 70vw;
+    }
+
+}
+
+

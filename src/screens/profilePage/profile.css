@@ -1,23 +1,59 @@
-.profile-flex {
-    display: flex;
-    gap: 5rem;
-    justify-content: center;
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: start;
+    gap: 1.5rem;
 }
 
-
-.options-bar {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: flex-start;
+.options-list {
+    list-style: none;
+    text-align: left;
 }
 
-.profile-flex h3 {
+.selected {
+    background-color:#111827;
+}
+
+.options-list li {
+    padding: 10px 12px;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    border: 1px solid currentColor;
     background-color: #d1d5db;
-    padding: 12px 16px;
-    border-radius: 8px;
+    width: 70%;
 }
 
-.profile-flex h3:hover{
-    cursor: pointer;
+.profile-component {
+    text-align: left;
+}
+
+.address-flex {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width : 750px){
+    .options-list li {
+        width: 100%;
+    }
+}
+
+@media (max-width : 600px){
+    .profile-grid{
+        display: block;
+    }
+    .options-list {
+        display: flex;
+    }
+
+    .options-list li {
+        padding: 0;
+        background-color: white;
+        border: none;
+        text-decoration: underline;
+        font-weight: bold;
+        margin-right: 1.5rem;
+    }
 }

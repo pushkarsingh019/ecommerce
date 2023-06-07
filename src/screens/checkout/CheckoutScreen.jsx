@@ -3,11 +3,13 @@ import { useState, useContext } from "react";
 import Navbar from "../../components/navigation/Navbar";
 import "./checkout.css";
 import { storeContext } from "../../utils/storeContext";
-import AddressCard from "../../components/addressCard/AddressCard";
+import Address from "../../components/address/Address";
+import CartCard from "../../components/cartProductCard/CartCard";
 
 // importing checkout steps
 import { NoUserScreen } from "../profilePage/ProfileScreen";
 import { useNavigate } from "react-router-dom";
+import CheckoutCard from "../../components/checkoutCard/CheckoutCard";
 
 const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
     const { cart, logout, newAddress } = useContext(storeContext);
@@ -34,38 +36,49 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
     switch (step) {
         case 1:
             return (
-                <section>
-                    {Object.keys(user).length === 0 ? (
-                        ""
-                    ) : (
-                        <div className="flex">
-                            <div></div>
-                            <p
-                                className="go-back"
-                                onClick={() => updateStep(step + 1)}
-                            >
-                                →
-                            </p>
-                        </div>
-                    )}
-                    {Object.keys(user).length === 0 ? (
-                        <NoUserScreen />
-                    ) : (
-                        <div>
-                            <p>
-                                Name : <strong>{user.name}</strong>
-                            </p>
-                            <p>
-                                Email : <strong>{user.email}</strong>
-                            </p>
-                            <button onClick={() => logout()}>Logout</button>
-                        </div>
-                    )}
+                <section className="checkout-steps">
+                    <div>
+                        {Object.keys(user).length === 0 ? (
+                            ""
+                        ) : (
+                            <div className="flex">
+                                <div></div>
+                                <p
+                                    className="go-back"
+                                    onClick={() => updateStep(step + 1)}
+                                >
+                                    →
+                                </p>
+                            </div>
+                        )}
+                        {Object.keys(user).length === 0 ? (
+                            <NoUserScreen />
+                        ) : (
+                            <div>
+                                <h2>Profile Details</h2>
+                                <br />
+                                <p>
+                                    Name : <strong>{user.name}</strong>
+                                </p>
+                                <p>
+                                    Email : <strong>{user.email}</strong>
+                                </p>
+                                <br />
+                                <br />
+                                <p
+                                    onClick={() => logout()}
+                                    className="underline blue"
+                                >
+                                    continue as a different user
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </section>
             );
         case 2:
             return (
-                <section>
+                <section className="checkout-steps">
                     <div className="flex">
                         <p
                             className="go-back"
@@ -133,8 +146,11 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
                             />
                             <br />
                             <br />
-                            <button>add new address</button>
-                            <button onClick={() => setShowAddressForm(false)}>
+                            <button className="button">add new address</button>
+                            <button
+                                className="button"
+                                onClick={() => setShowAddressForm(false)}
+                            >
                                 cancel
                             </button>
                             <br />
@@ -143,28 +159,36 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
                     ) : (
                         ""
                     )}
-                    <div className="show-address">
+                    <div className="address-flex">
                         {user.address.map((address) => {
                             return (
-                                <AddressCard
+                                <Address
                                     key={address.id}
                                     address={address.address}
                                     contactNumber={address.contactNumber}
                                     onAddressSelect={handleAddressSelection}
                                     id={address.id}
                                     selectedAddress={selectedAddress}
+                                    usecase={"checkout"}
                                 />
                             );
                         })}
                     </div>
                     <br />
                     <br />
-                    <button onClick={() => updateStep(3)}>next</button>
+                    <div className="flex">
+                        <button
+                            className="button"
+                            onClick={() => updateStep(3)}
+                        >
+                            next
+                        </button>
+                    </div>
                 </section>
             );
         case 3:
             return (
-                <section>
+                <section className="checkout">
                     <div className="flex">
                         <p
                             className="go-back"
@@ -172,64 +196,37 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
                         >
                             ←
                         </p>
-                        <p
-                            className="go-back"
-                            onClick={() => updateStep(step + 1)}
-                        >
-                            →
-                        </p>
                     </div>
                     <br />
-                    <br />
-                    <div className="checkout-grid">
-                        <div className="checkout-details">
-                            <div className="shipping">
-                                <h4>Shipping Details</h4>
-                                <p>
-                                    <strong>Address</strong>:{" "}
-                                    {selectedAddress.address}
-                                </p>
-                                <p>
-                                    <strong>Contact Number</strong>:{" "}
-                                    {selectedAddress.contactNumber}
-                                </p>
-                            </div>
-                            <br />
-                            <hr />
-                            <br />
-                            <div className="cart-details">
-                                <h4>Order Items</h4>
-                                {cart.map((item) => {
-                                    return (
-                                        <div key={item._id} className="flex">
-                                            <div
-                                                className="underline"
-                                                onClick={() =>
-                                                    navigate(
-                                                        `/product/${item._id}`
-                                                    )
-                                                }
-                                            >
-                                                {item.name}
-                                            </div>
-                                            <div>
-                                                {item.quantity} x ₹{item.price}{" "}
-                                                = ₹{item.quantity * item.price}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                    <div className="cart-screen">
+                        <div>
+                            <div className="checkout-details">
+                                <div className="cart-details">
+                                    <h2>Order Items</h2>
+                                    <br />
+                                    {cart.map((item) => {
+                                        return (
+                                            <CheckoutCard
+                                                key={item._id}
+                                                id={item._id}
+                                                name={item.name}
+                                                image={item.image}
+                                                price={item.price}
+                                                quantity={item.quantity}
+                                            />
+                                        );
+                                    })}
+                                </div>
                             </div>
                         </div>
-                        <br />
-                        <hr />
-                        <br />
-                        <div className="order-summary">
-                            <h4>Order Summary</h4>
+                        <div className="summary">
+                            <h3>Order Summary</h3>
+                            <hr />
+                            <br />
                             <div className="flex">
                                 <p>Items</p>
                                 <p>
-                                    {/* <strong> */}₹{" "}
+                                    ₹{" "}
                                     {cart.reduce(
                                         (totalCost, currentItem) =>
                                             totalCost +
@@ -237,26 +234,16 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
                                                 currentItem.quantity,
                                         0
                                     )}
-                                    {/* </strong> */}
                                 </p>
                             </div>
                             <div className="flex">
                                 <p>Shipping</p>
                                 <p>₹ 0</p>
                             </div>
-                            {/* <div className="flex">
+                            <div className="flex">
                                 <p>Tax</p>
-                                <p>
-                                    ₹{" "}
-                                    {cart.reduce(
-                                        (totalCost, currentItem) =>
-                                            totalCost +
-                                            currentItem.quantity *
-                                                currentItem.price,
-                                        0
-                                    ) * 0.08}
-                                </p>
-                            </div> */}
+                                <p>8%</p>
+                            </div>
                             <div className="flex">
                                 <p>Total</p>
                                 <p>
@@ -280,28 +267,33 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
                                     </strong>
                                 </p>
                             </div>
+                            <hr />
+                            <br />
+                            <small>Order will be delivered at</small>
+                            <br />
+                            <span>{selectedAddress.address}</span>
+                            <br />
+                            <span>
+                                <strong>{selectedAddress.contactNumber}</strong>
+                            </span>
+                            <br />
+                            <br />
+                            <button
+                                className="cta"
+                                onClick={() => {
+                                    onNewOrder(selectedAddress);
+                                    updateStep(4);
+                                }}
+                            >
+                                proceed to payment
+                            </button>
                         </div>
-                    </div>
-                    <br />
-                    <br />
-                    <div className="flex">
-                        <div></div>
-                        <button
-                            style={{ width: "25%" }}
-                            className="cta"
-                            onClick={() => {
-                                onNewOrder(selectedAddress);
-                                updateStep(4);
-                            }}
-                        >
-                            proceed to payment
-                        </button>
                     </div>
                 </section>
             );
         case 4:
             return (
-                <section>
+                <section className="checkout-steps">
                     <div className="flex">
                         <p
                             className="go-back"
@@ -312,7 +304,16 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
                         <p className="go-back"></p>
                     </div>
                     <h2>Order Confirmation</h2>
-                    <p>Order confirmed, go to your profile to see your order</p>
+                    <p>
+                        Order confirmed, go to{" "}
+                        <span
+                            className="underline blue"
+                            onClick={() => navigate(`/profile`)}
+                        >
+                            your profile
+                        </span>{" "}
+                        to see your order
+                    </p>
                 </section>
             );
         default:
@@ -321,8 +322,8 @@ const CheckoutSteps = ({ step, user, updateStep, onNewOrder }) => {
 };
 
 const CheckoutScreen = () => {
-    const [step, setStep] = useState(1);
     const { user, createNewOrder } = useContext(storeContext);
+    const [step, setStep] = useState(Object.keys(user).length === 0 ? 1 : 2);
     const handleStepChange = (step) => setStep(step);
     const handleNewOrder = (shippingAddress) => createNewOrder(shippingAddress);
     return (

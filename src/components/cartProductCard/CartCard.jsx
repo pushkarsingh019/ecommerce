@@ -5,7 +5,7 @@ import iphoneImage from "../../assets/iphoneImage.jpeg";
 import "./cartCard.css";
 import { useEffect } from "react";
 
-const CartCard = ({ name, image, price, quantity, product }) => {
+const CartCard = ({ name, image, price, quantity, product, showCTA }) => {
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const [cartQuantity, setCartQuantity] = useState(quantity);
     const { moveToWishlist, removeFromCart, updateQuantity } =
@@ -23,15 +23,11 @@ const CartCard = ({ name, image, price, quantity, product }) => {
 
     return (
         <div className="cart-card">
-            <img src={iphoneImage} alt={name} style={imageStyles} />
+            <img src={image} alt={name} style={imageStyles} />
             <div className="product-details">
-                <div className="flex">
-                    <h3 className="product-name">{name}</h3>
-                    <p>
-                        <strong>₹{price}</strong>
-                    </p>
-                </div>
+                <h4>{name}</h4>
                 <br />
+                <p>₹{price}</p>
                 <br />
                 <div className="quantiy">
                     <label>Qty : </label>
@@ -47,27 +43,25 @@ const CartCard = ({ name, image, price, quantity, product }) => {
                     </select>
                 </div>
                 <br />
-                <br />
-                <br />
-                <div className="flex">
-                    <button
-                        className="button"
-                        onClick={() => moveToWishlist(product)}
-                    >
-                        move to wishlist
-                    </button>
-                    <button
-                        className="button"
-                        onClick={() => removeFromCart(product)}
-                    >
-                        remove from cart
-                    </button>
-                    <p className="button">share</p>
-                </div>
+                {showCTA ? (
+                    <div className="flex">
+                        <button
+                            className="button"
+                            onClick={() => moveToWishlist(product)}
+                        >
+                            move to wishlist
+                        </button>
+                        <button
+                            className="button"
+                            onClick={() => removeFromCart(product)}
+                        >
+                            remove from cart
+                        </button>
+                    </div>
+                ) : (
+                    ""
+                )}
             </div>
-            <br />
-            <br />
-            <br />
         </div>
     );
 };

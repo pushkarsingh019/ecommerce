@@ -4,6 +4,7 @@ import { storeContext } from "../../utils/storeContext";
 import CartCard from "../../components/cartProductCard/CartCard";
 import { useNavigate } from "react-router-dom";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import nothing from "../../assets/nothing.svg";
 
 import "./cart.css";
 
@@ -14,15 +15,32 @@ const CartScreen = () => {
     return (
         <section>
             <Navbar />
-            <main className="screen">
-                <h2>my shopping cart ({cart.length} products)</h2>
+            <main className="screen screen-cart">
+                <h2 className="center">my cart ({cart.length} products)</h2>
                 <br />
                 <br />
 
                 <div className="cart-screen">
                     <div>
                         {cart.length === 0 ? (
-                            <p>no products in cart</p>
+                            <div>
+                                <p>
+                                    no products in cart,{" "}
+                                    <span
+                                        className="underline blue"
+                                        onClick={() => navigate(`/products`)}
+                                    >
+                                        continue shopping
+                                    </span>
+                                </p>
+                                <br />
+                                <img
+                                    src={nothing}
+                                    alt="no products in cart"
+                                    className="nothing"
+                                    loading="lazy"
+                                />
+                            </div>
                         ) : (
                             <div ref={parent}>
                                 {cart.map((product) => {
@@ -33,6 +51,8 @@ const CartScreen = () => {
                                             price={product.price}
                                             quantity={product.quantity}
                                             product={product}
+                                            image={product.image}
+                                            showCTA={true}
                                         />
                                     );
                                 })}
@@ -40,36 +60,74 @@ const CartScreen = () => {
                         )}
                     </div>
                     <div className="summary">
-                        <h3>
-                            Subtotal (
-                            {cart.reduce(
-                                (totalItems, currentItem) =>
-                                    totalItems + currentItem.quantity,
-                                0
-                            )}{" "}
-                            items)
-                        </h3>
+                        <h4>Price Details</h4>
+                        <hr />
                         <br />
+                        <div className="flex">
+                            <span>
+                                Price(
+                                {cart.reduce(
+                                    (totalItems, currentItem) =>
+                                        totalItems + currentItem.quantity,
+                                    0
+                                )}{" "}
+                                items)
+                            </span>
+                            <span>
+                                <strong>
+                                    ₹
+                                    {cart.reduce(
+                                        (totalCost, currentItem) =>
+                                            totalCost +
+                                            currentItem.price *
+                                                currentItem.quantity,
+                                        0
+                                    )}
+                                </strong>
+                            </span>
+                        </div>
+                        <div className="flex">
+                            <span>Discount</span>
+                            <span>
+                                <strong>₹ 0</strong>
+                            </span>
+                        </div>
+                        <div className="flex">
+                            <span>Delivery Charges</span>
+                            <span>
+                                <strong>₹ 0</strong>
+                            </span>
+                        </div>
+                        <hr />
+                        <div className="flex">
+                            <span>Total Amount</span>
+                            <span>
+                                <strong>
+                                    ₹
+                                    {cart.reduce(
+                                        (totalCost, currentItem) =>
+                                            totalCost +
+                                            currentItem.price *
+                                                currentItem.quantity,
+                                        0
+                                    )}
+                                </strong>
+                            </span>
+                        </div>
+                        <hr />
                         <p>
-                            Total cost : ₹
-                            {cart.reduce(
-                                (totalCost, currentItem) =>
-                                    totalCost +
-                                    currentItem.price * currentItem.quantity,
-                                0
-                            )}
+                            <small>No delivery charge for this order!</small>
                         </p>
-                        <br />
                         <button
-                            className="button"
                             onClick={() => navigate(`/checkout`)}
+                            className={cart.length === 0 ? "disabled" : "cta"}
+                            disabled={cart.length === 0 ? true : false}
                         >
-                            checkout
+                            place order
                         </button>
                     </div>
                 </div>
             </main>
-            <button onClick={() => clearCart()}>clear cart</button>
         </section>
     );
 };
